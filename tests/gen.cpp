@@ -158,7 +158,13 @@ int main(int argc, char** argv) {
             const long v = base();
             long l, r;
             random_range(len[static_cast<std::size_t>(v)], l, r);
-            const long p = random_pos(len[static_cast<std::size_t>(v)] - (r - l));
+            long p = random_pos(len[static_cast<std::size_t>(v)] - (r - l));
+            if (mode == "big" || mode == "worst") {  // three independent cut points: the most new nodes
+                l = rnd(0, len[static_cast<std::size_t>(v)]);
+                r = rnd(0, len[static_cast<std::size_t>(v)]);
+                if (l > r) std::swap(l, r);
+                p = rnd(0, len[static_cast<std::size_t>(v)] - (r - l));
+            }
             std::printf("MOVE %ld %ld %ld %ld\n", v, l, r, p);
             len.push_back(len[static_cast<std::size_t>(v)]);
             if (track) {

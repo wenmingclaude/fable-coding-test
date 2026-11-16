@@ -2,7 +2,7 @@ CXX      ?= g++
 CXXFLAGS ?= -std=c++20 -O2 -Wall -Wextra -Wpedantic -Wshadow -Wconversion
 BUILD    := build
 HEADERS  := $(wildcard src/*.hpp)
-BINARIES := tte naive gen unit fuzz stress bench measure
+BINARIES := tte naive gen unit fuzz stress bench measure explain
 
 SAN_FLAGS := -std=c++20 -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all \
              -D_GLIBCXX_ASSERTIONS -DTTE_POOL_STRESS
@@ -19,6 +19,7 @@ $(BUILD)/fuzz:   tests/fuzz.cpp
 $(BUILD)/stress: tests/stress.cpp
 $(BUILD)/bench:  bench/bench.cpp
 $(BUILD)/measure: bench/measure.cpp
+$(BUILD)/explain: examples/explain.cpp
 
 $(BUILD)/%: $(HEADERS)
 	@mkdir -p $(BUILD)

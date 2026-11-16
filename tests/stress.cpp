@@ -76,13 +76,14 @@ void run(const char* name, std::string s0, int insert_percent, std::uint64_t see
             range(n, l, r);
             int v;
             const u32 op = step < grow ? 0 : rnd(0, 99);
-            if ((step < grow || op < static_cast<u32>(insert_percent)) && budget > 0) {
+            const bool want_insert = step < grow || op < static_cast<u32>(insert_percent);
+            if (want_insert && budget > 0) {
                 std::string piece(static_cast<std::size_t>(std::min<long>(budget, step < grow ? 20 : rnd(1, 20))), 'a');
                 for (char& c : piece) c = t.empty() ? 'a' : t[rnd(0, n - 1)];  // letters of the text itself
                 budget -= static_cast<long>(piece.size());
                 t.insert(l, piece);
                 v = ed.insert(base, l, piece);
-            } else if (op < static_cast<u32>(insert_percent) + 8) {
+            } else if (!want_insert && op < static_cast<u32>(insert_percent) + 8) {
                 r = std::min(r, l + 25);  // keep the text long
                 t.erase(l, r - l);
                 v = ed.erase(base, l, r);

@@ -219,6 +219,7 @@ class Editor {
     const Node* nodes() const { return pool_.data(); }
     std::size_t memory_bytes() const { return pool_.size() * sizeof(Node); }
     u32 depth(int v) const { return depth_of(version(v)); }
+    Tree tree(int v) const { return version(v); }
 
     // Recomputes everything the nodes of version v claim and compares.
     // O(length); returns an empty string if the version is sound.
