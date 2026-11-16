@@ -27,13 +27,21 @@
 #define TTE_HASH_BASES 1
 #endif
 
+// The hashes live in F_p with p = 2^e - 1.  e = 61 is the only value meant
+// for use.  Tests set e = 13 (p = 8191) to make collisions frequent and to
+// watch what a collision does; e must make 2^e - 1 prime (13, 17, 19, 31, 61).
+#ifndef TTE_MERSENNE_EXPONENT
+#define TTE_MERSENNE_EXPONENT 61
+#endif
+
 namespace tte {
 
 using u32 = std::uint32_t;
 using u64 = std::uint64_t;
 
-inline constexpr u64 kP = (u64{1} << 61) - 1;  // Mersenne prime 2^61 - 1
-inline constexpr int kBases = TTE_HASH_BASES;
+inline constexpr int kExponent = TTE_MERSENNE_EXPONENT;
+inline constexpr u64 kP = (u64{1} << kExponent) - 1;  // the Mersenne prime 2^e - 1
+inline constexpr std::size_t kBases = TTE_HASH_BASES;
 
 // --- F_p, operands and results always in [0, p) ---------------------------
 
@@ -43,9 +51,9 @@ constexpr u64 add_mod(u64 a, u64 b) {
 }
 constexpr u64 sub_mod(u64 a, u64 b) { return a >= b ? a - b : a + kP - b; }
 constexpr u64 mul_mod(u64 a, u64 b) {
-    // 2^61 == 1 (mod p), so fold the 122-bit product at bit 61.
+    // 2^e == 1 (mod p), so fold the 2e-bit product at bit e.
     __uint128_t t = static_cast<__uint128_t>(a) * b;
-    u64 s = (static_cast<u64>(t) & kP) + static_cast<u64>(t >> 61);  // <= 2p - 3
+    u64 s = (static_cast<u64>(t) & kP) + static_cast<u64>(t >> kExponent);  // <= 2p - 3
     return s >= kP ? s - kP : s;
 }
 
@@ -56,21 +64,21 @@ struct Hash {
 
     friend constexpr bool operator==(const Hash&, const Hash&) = default;
     friend constexpr Hash operator+(Hash a, const Hash& b) {
-        for (int i = 0; i < kBases; ++i) a.v[i] = add_mod(a.v[i], b.v[i]);
+        for (std::size_t i = 0; i < kBases; ++i) a.v[i] = add_mod(a.v[i], b.v[i]);
         return a;
     }
     friend constexpr Hash operator-(Hash a, const Hash& b) {
-        for (int i = 0; i < kBases; ++i) a.v[i] = sub_mod(a.v[i], b.v[i]);
+        for (std::size_t i = 0; i < kBases; ++i) a.v[i] = sub_mod(a.v[i], b.v[i]);
         return a;
     }
     friend constexpr Hash operator*(Hash a, const Hash& b) {
-        for (int i = 0; i < kBases; ++i) a.v[i] = mul_mod(a.v[i], b.v[i]);
+        for (std::size_t i = 0; i < kBases; ++i) a.v[i] = mul_mod(a.v[i], b.v[i]);
         return a;
     }
     // Embeds a small integer (a character code) diagonally.
     static constexpr Hash scalar(u64 c) {
         Hash h;
-        for (int i = 0; i < kBases; ++i) h.v[i] = c;
+        for (std::size_t i = 0; i < kBases; ++i) h.v[i] = c;
         return h;
     }
 };

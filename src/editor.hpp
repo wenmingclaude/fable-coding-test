@@ -59,6 +59,7 @@ class Editor {
     // hash collision.  Use entropy_seed() unless reproducibility is wanted.
     explicit Editor(std::string_view initial, u64 seed = entropy_seed())
         : rng_(seed), pw_(random_base()) {
+        check_text(initial);
         pool_.push(Node{0, 0, 0, 0, {}, {}});  // index 0: the empty tree
         mark_ = pool_.size();
         publish(build(initial));
@@ -75,6 +76,8 @@ class Editor {
     int insert(int v, u32 p, std::string_view s) {
         const Tree t = begin(v);
         require(p <= t.size, "insert: position out of range");
+        check_text(s);
+        if (s.empty()) return publish(t);
         auto [a, b] = split(t, p);
         return publish(merge(merge(a, build(s)), b));
     }
@@ -272,6 +275,10 @@ class Editor {
     static void require(bool ok, const char* what) {
         if (!ok) throw std::out_of_range(what);
     }
+    static void check_text(std::string_view s) {
+        for (const char ch : s)
+            if (ch < 'a' || ch > 'z') throw std::invalid_argument("text must consist of the letters a-z");
+    }
 
     // ---- building trees (inside one operation) ----------------------------
     //
@@ -355,7 +362,6 @@ class Editor {
         std::vector<u32>& spine = build_spine_;  // right spine, root first
         spine.clear();
         for (const char ch : s) {
-            if (ch < 'a' || ch > 'z') throw std::invalid_argument("tte: text must be a-z");
             const u32 key = (next_priority() << 5) | static_cast<u32>(ch - 'a' + 1);
             const u32 id = make(Tree{}, key, Tree{}).ref >> 1;
             // Everything on the spine with a smaller key becomes the left
@@ -519,7 +525,7 @@ class Editor {
         Hash x;
         for (u64& c : x.v) {
             u64 r;
-            do r = next_random() >> 3; while (r >= kP - 3);  // uniform in [0, p - 3)
+            do r = next_random() >> (64 - kExponent); while (r >= kP - 3);  // uniform in [0, p - 3)
             c = r + 2;                                        // uniform in [2, p - 2]
         }
         return x;

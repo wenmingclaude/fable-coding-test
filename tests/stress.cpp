@@ -77,7 +77,7 @@ void run(const char* name, std::string s0, int insert_percent, std::uint64_t see
             int v;
             const u32 op = step < grow ? 0 : rnd(0, 99);
             if ((step < grow || op < static_cast<u32>(insert_percent)) && budget > 0) {
-                std::string piece(std::min<long>(budget, step < grow ? 20 : rnd(1, 20)), 'a');
+                std::string piece(static_cast<std::size_t>(std::min<long>(budget, step < grow ? 20 : rnd(1, 20))), 'a');
                 for (char& c : piece) c = t.empty() ? 'a' : t[rnd(0, n - 1)];  // letters of the text itself
                 budget -= static_cast<long>(piece.size());
                 t.insert(l, piece);

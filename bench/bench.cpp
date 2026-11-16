@@ -201,7 +201,7 @@ void bench_queries(std::uint64_t seed, const char* title, const std::string& s0,
 int main(int argc, char** argv) {
     const std::uint64_t seed = argc > 1 ? std::strtoull(argv[1], nullptr, 10) : 1;
     rng.seed(seed);
-    std::printf("node size %zu bytes, hash bases %d, seed %llu\n", sizeof(tte::Node), tte::kBases,
+    std::printf("node size %zu bytes, hash bases %zu, seed %llu\n", sizeof(tte::Node), tte::kBases,
                 static_cast<unsigned long long>(seed));
     bench_edits(seed);
 

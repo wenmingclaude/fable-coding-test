@@ -36,7 +36,7 @@ std::mt19937_64 rng;
 u32 rnd(u32 lo, u32 hi) { return lo + static_cast<u32>(rng() % (static_cast<std::uint64_t>(hi) - lo + 1)); }
 
 struct Totals {
-    long edits = 0, queries = 0, yes = 0, long_lcp = 0, versions_reread = 0;
+    long edits = 0, queries = 0, yes = 0, long_lcp = 0, versions_reread = 0, collisions = 0;
     std::size_t max_new_nodes = 0;
     u32 max_depth = 0;
 } totals;
@@ -45,6 +45,22 @@ struct Totals {
     std::printf("FUZZ FAILURE: %s (seed %llu, round %d, step %ld)\n", what,
                 static_cast<unsigned long long>(seed), round, step);
     std::exit(1);
+}
+
+// With the real modulus every answer must equal the model's.  When built
+// with a tiny modulus (make collide) hash collisions do happen; then a wrong
+// answer is tolerated, and counted, only in the direction the design allows:
+// "equal"/"palindrome" claimed for texts that are not, or an LCP too long.
+const bool kTolerant = tte::kExponent < 61;
+bool acceptable(bool got, bool want) {
+    if (got == want) return true;
+    if (kTolerant && got && !want) return ++totals.collisions, true;
+    return false;
+}
+bool acceptable_lcp(u32 got, u32 want) {
+    if (got == want) return true;
+    if (kTolerant && got > want) return ++totals.collisions, true;
+    return false;
 }
 
 void one_round(std::uint64_t seed, int round) {
@@ -147,7 +163,7 @@ void one_round(std::uint64_t seed, int round) {
                 if (rnd(0, 9) == 0) r2 = rnd(l2, nb);  // sometimes unequal lengths
                 const bool want = a.substr(l1, r1 - l1) == b.substr(l2, r2 - l2);
                 totals.yes += want;
-                if (ed.equal(v1, l1, r1, v2, l2, r2) != want) die("EQUAL differs from the model", seed, round, step);
+                if (!acceptable(ed.equal(v1, l1, r1, v2, l2, r2), want)) die("EQUAL differs from the model", seed, round, step);
             } else if (op == 7) {
                 u32 l, r;
                 range(na, l, r);
@@ -159,15 +175,15 @@ void one_round(std::uint64_t seed, int round) {
                 bool want = true;
                 for (u32 i = l, j = r; i < j; ++i) { --j; if (i < j && a[i] != a[j]) want = false; }
                 totals.yes += want;
-                if (ed.palindrome(v1, l, r) != want) die("PAL differs from the model", seed, round, step);
+                if (!acceptable(ed.palindrome(v1, l, r), want)) die("PAL differs from the model", seed, round, step);
             } else {
                 u32 p1 = rnd(0, na), p2 = rnd(0, nb);
                 if (rnd(0, 2) == 0) p2 = std::min(p1, nb);
                 u32 want = 0;
                 while (p1 + want < na && p2 + want < nb && a[p1 + want] == b[p2 + want]) ++want;
                 totals.long_lcp += want >= 16;
-                if (ed.lcp(v1, p1, v2, p2) != want) die("LCP differs from the model", seed, round, step);
-                if (ed.lcp_reference(v1, p1, v2, p2) != want) die("lcp_reference differs from the model", seed, round, step);
+                if (!acceptable_lcp(ed.lcp(v1, p1, v2, p2), want)) die("LCP differs from the model", seed, round, step);
+                if (!acceptable_lcp(ed.lcp_reference(v1, p1, v2, p2), want)) die("lcp_reference differs from the model", seed, round, step);
             }
             if (ed.node_count() != frozen.size()) die("a query allocated nodes", seed, round, step);
         }
@@ -196,5 +212,13 @@ int main(int argc, char** argv) {
                 "%ld versions re-read; max new nodes per edit %zu, max depth %u -- all consistent\n",
                 rounds, static_cast<unsigned long long>(seed), totals.edits, totals.queries, totals.yes,
                 totals.long_lcp, totals.versions_reread, totals.max_new_nodes, totals.max_depth);
+    if (kTolerant) {
+        std::printf("fuzz: hash modulus 2^%d - 1: %ld answers were wrong because of collisions, every one of them "
+                    "in the permitted direction\n", tte::kExponent, totals.collisions);
+        if (totals.collisions == 0) {
+            std::printf("fuzz: expected to see collisions with this modulus\n");
+            return 1;
+        }
+    }
     return 0;
 }

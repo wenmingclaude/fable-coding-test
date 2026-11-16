@@ -2,12 +2,12 @@ CXX      ?= g++
 CXXFLAGS ?= -std=c++20 -O2 -Wall -Wextra -Wpedantic -Wshadow -Wconversion
 BUILD    := build
 HEADERS  := $(wildcard src/*.hpp)
-BINARIES := tte naive gen unit fuzz stress bench
+BINARIES := tte naive gen unit fuzz stress bench measure
 
 SAN_FLAGS := -std=c++20 -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all \
              -D_GLIBCXX_ASSERTIONS -DTTE_POOL_STRESS
 
-.PHONY: all test fuzz sanitize dual mutation stress bench clean
+.PHONY: all test fuzz sanitize dual collide mutation stress bench clean
 
 all: $(addprefix $(BUILD)/,$(BINARIES))
 
@@ -18,6 +18,7 @@ $(BUILD)/unit:   tests/unit.cpp
 $(BUILD)/fuzz:   tests/fuzz.cpp
 $(BUILD)/stress: tests/stress.cpp
 $(BUILD)/bench:  bench/bench.cpp
+$(BUILD)/measure: bench/measure.cpp
 
 $(BUILD)/%: $(HEADERS)
 	@mkdir -p $(BUILD)
@@ -57,9 +58,17 @@ dual:
 	$(BUILD)/dual/fuzz 300 $(or $(SEED),1)
 	tests/diff.sh 3 $(or $(SEED),1) $(BUILD)/dual/tte
 
+# The fuzz test with a 13-bit hash modulus: collisions now happen all the
+# time.  Texts, invariants and the frozen-pool audit must still be exact, and
+# every wrong query answer must be wrong in the permitted direction.
+collide:
+	@mkdir -p $(BUILD)/collide
+	$(CXX) $(CXXFLAGS) -DTTE_MERSENNE_EXPONENT=13 tests/fuzz.cpp -o $(BUILD)/collide/fuzz
+	$(BUILD)/collide/fuzz 1000 $(or $(SEED),1)
+
 # Plants bugs in a copy of the editor and checks that the tests notice each one.
 mutation: all
-	tests/mutation.sh
+	python3 tests/mutation.py
 
 # Full-size inputs (|S0| = q = 200000) checked against a string model.
 stress: all

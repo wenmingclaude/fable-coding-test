@@ -16,6 +16,9 @@
 //   edge     empty ranges, whole ranges, positions 0 and |S|
 //   flip     the same range reversed over and over, compared with old versions
 //   big      edits only (for memory/time measurements): all MOVE
+//   worst    10000 INSERTs of 20 letters (text grows to N + 200000), then only
+//            MOVE of random ranges on the newest version: the largest memory
+//            footprint the limits allow
 //
 // While the total text is small the generator keeps every version's text, so
 // that it can aim queries at substrings that really are equal / palindromic;
@@ -94,14 +97,14 @@ int main(int argc, char** argv) {
     if (mode == "lcp") w = {2, 1, 2, 2, 1, 1, 20};
     if (mode == "pal") w = {1, 1, 4, 2, 2, 12, 2};
     if (mode == "flip") w = {0, 0, 10, 0, 6, 2, 2};
-    if (mode == "big") w = {0, 0, 0, 1, 0, 0, 0};
+    if (mode == "big" || mode == "worst") w = {0, 0, 0, 1, 0, 0, 0};
     std::discrete_distribution<int> pick(w.begin(), w.end());
 
     std::printf("%s\n%ld\n", s0.c_str(), q);
     for (long i = 0; i < q; ++i) {
         const long newest = static_cast<long>(len.size()) - 1;
         auto base = [&]() -> long {
-            if (mode == "chain" || mode == "flip" || mode == "big") return newest;
+            if (mode == "chain" || mode == "flip" || mode == "big" || mode == "worst") return newest;
             if (mode == "branch") {
                 switch (rnd(0, 3)) {
                     case 0: return 0;
@@ -116,6 +119,14 @@ int main(int argc, char** argv) {
 
         int op = pick(rng);
         if (op == 0 && insert_budget == 0) op = 2;
+        if (mode == "worst" && insert_budget > 0) {  // growth phase
+            const long v = newest;
+            const std::string s = random_text(std::min(insert_budget, 20L));
+            insert_budget -= static_cast<long>(s.size());
+            std::printf("INSERT %ld %ld %s\n", v, rnd(0, len[static_cast<std::size_t>(v)]), s.c_str());
+            len.push_back(len[static_cast<std::size_t>(v)] + static_cast<long>(s.size()));
+            continue;
+        }
 
         if (op == 0) {  // INSERT
             const long v = base(), p = random_pos(len[static_cast<std::size_t>(v)]);

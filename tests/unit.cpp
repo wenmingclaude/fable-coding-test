@@ -49,7 +49,8 @@ void test_field_arithmetic() {
     const u64 p = tte::kP;
     const u64 edge[] = {0, 1, 2, p - 2, p - 1, p / 2, p / 2 + 1, (u64{1} << 32) - 1, u64{1} << 32, u64{1} << 60};
     std::mt19937_64 rng(1);
-    std::vector<u64> xs(edge, edge + 10);
+    std::vector<u64> xs;
+    for (const u64 e : edge) xs.push_back(e % p);
     for (int i = 0; i < 2000; ++i) xs.push_back(rng() % p);
     for (std::size_t i = 0; i < xs.size(); ++i) {
         for (std::size_t j = 0; j < xs.size(); j += (i < 10 ? 1 : 97)) {
@@ -75,7 +76,7 @@ Summary mu(const std::string& s, const tte::Powers& pw) {
 
 void test_summary_is_a_homomorphism() {
     Hash x;
-    for (int i = 0; i < tte::kBases; ++i) x.v[static_cast<std::size_t>(i)] = 1000003 + 7919 * static_cast<u64>(i);
+    for (std::size_t i = 0; i < tte::kBases; ++i) x.v[i] = 1000003 + 7919 * i;
     tte::Powers pw(x);
     pw.ensure(64);
     std::mt19937 rng(2);
@@ -135,7 +136,10 @@ void test_empty_and_boundary() {
     CHECK(ed.erase(0, 2, 2) == 1 && ed.text(1) == "abcde");
     CHECK(ed.reverse(0, 5, 5) == 2 && ed.text(2) == "abcde");
     CHECK(ed.reverse(0, 3, 4) == 3 && ed.text(3) == "abcde");  // one character
-    CHECK(ed.move(0, 1, 1, 4) == 4 && ed.text(4) == "abcde");
+    CHECK(ed.text(ed.reverse(0, 3, 5)) == "abced");             // two characters: the shortest real reversal
+    CHECK(ed.text(ed.reverse(0, 0, 2)) == "bacde");
+    CHECK(ed.versions() == 6);
+    CHECK(ed.move(0, 1, 1, 4) == 6 && ed.text(6) == "abcde");
     CHECK(ed.equal(0, 0, 0, 0, 5, 5));    // empty == empty
     CHECK(ed.equal(0, 3, 3, 1, 0, 0));
     CHECK(!ed.equal(0, 0, 0, 0, 0, 1));   // different lengths
@@ -221,6 +225,9 @@ void test_branching_history() {
     CHECK(ed.text(f) == "fedcba");
     // queries across branches
     CHECK(ed.equal(a, 3, 6, d, 0, 3));          // "xyz"
+    CHECK(ed.equal(a, 0, 3, a, 3, 6) == false); // same version, different places: "abc" vs "xyz"
+    CHECK(ed.equal(a, 0, 3, a, 0, 3));
+    CHECK(ed.lcp(a, 0, a, 3) == 0 && ed.lcp(a, 4, a, 4) == 5);
     CHECK(ed.equal(0, 0, 6, f, 0, 6) == false);
     CHECK(ed.lcp(a, 0, c, 0) == 2);             // "ab"
     CHECK(ed.lcp(d, 3, 0, 3) == 3);             // "def"
@@ -425,7 +432,7 @@ int main() {
         t.run();
         std::printf("%s  %s\n", failures == before ? "ok  " : "FAIL", t.name);
     }
-    std::printf("unit tests: %d checks, %d failed (hash bases: %d, node: %zu bytes)\n", checks, failures,
+    std::printf("unit tests: %d checks, %d failed (hash bases: %zu, node: %zu bytes)\n", checks, failures,
                 tte::kBases, sizeof(tte::Node));
     return failures ? 1 : 0;
 }
