@@ -1,2 +1,3 @@
 build/
-fuzz-failure.in
+__pycache__/
+*.pyc

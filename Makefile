@@ -1,57 +1,67 @@
 CXX      ?= g++
-CXXFLAGS ?= -std=c++20 -O2 -Wall -Wextra -Wpedantic -Wshadow -Wconversion
-BUILD    := build
-HEADERS  := $(wildcard src/*.hpp verify/*.hpp tests/*.hpp)
-BINARIES := solver brute rollback unit_tests fuzz gen measure
+CXXFLAGS ?= -std=c++20 -O2 -Wall -Wextra -Wshadow
+SANFLAGS  = -std=c++20 -O1 -g -fno-omit-frame-pointer -fsanitize=address,undefined \
+            -fno-sanitize-recover=all -D_GLIBCXX_ASSERTIONS -Wall -Wextra -Wshadow
+PYTHON   ?= python3
 
-.PHONY: all test fuzz sanitize mutation bench clean
+B  = build
+BS = build/san
 
-all: $(addprefix $(BUILD)/,$(BINARIES))
+BINS     = $(B)/sat_solver $(B)/rup_check $(B)/model_check $(B)/brute $(B)/dpll
+SAN_BINS = $(BS)/sat_solver $(BS)/rup_check $(BS)/model_check $(BS)/brute $(BS)/dpll
 
-$(BUILD)/solver:     src/main.cpp
-$(BUILD)/brute:      verify/brute_main.cpp
-$(BUILD)/rollback:   verify/rollback_main.cpp
-$(BUILD)/unit_tests: tests/unit_tests.cpp
-$(BUILD)/fuzz:       tests/fuzz.cpp
-$(BUILD)/gen:        tests/gen.cpp
-$(BUILD)/measure:    bench/measure.cpp
+SOLVER_SRC = src/main.cpp src/solver.cpp
+SOLVER_HDR = src/solver.hpp src/dimacs.hpp
 
-$(BUILD)/%: $(HEADERS)
-	@mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) $(filter %.cpp,$^) -o $@
+all: $(BINS)
 
-# Unit tests, the sample through the real binaries, and a short fuzz run.
-test: all
-	$(BUILD)/unit_tests
-	@for impl in solver rollback brute; do \
-		$(BUILD)/$$impl < examples/sample.in | cmp -s - examples/sample.out \
-			&& echo "sample via $$impl binary: ok" \
-			|| { echo "sample via $$impl binary: FAILED"; exit 1; }; \
-	done
-	$(BUILD)/fuzz 1 0.1
+$(B)/sat_solver: $(SOLVER_SRC) $(SOLVER_HDR)
+	@mkdir -p $(B)
+	$(CXX) $(CXXFLAGS) -o $@ $(SOLVER_SRC)
+$(B)/rup_check: checker/rup_check.cpp checker/cnf.hpp
+	@mkdir -p $(B)
+	$(CXX) $(CXXFLAGS) -o $@ $<
+$(B)/model_check: checker/model_check.cpp checker/cnf.hpp
+	@mkdir -p $(B)
+	$(CXX) $(CXXFLAGS) -o $@ $<
+$(B)/brute: tools/brute.cpp checker/cnf.hpp
+	@mkdir -p $(B)
+	$(CXX) $(CXXFLAGS) -o $@ $<
+$(B)/dpll: baseline/dpll.cpp src/dimacs.hpp
+	@mkdir -p $(B)
+	$(CXX) $(CXXFLAGS) -o $@ $<
 
-# The full differential run (about a minute). Pass SEED=... to vary it.
-SEED ?= 20260101
-fuzz: all
-	$(BUILD)/fuzz $(SEED) 1
+# The same programs under AddressSanitizer + UndefinedBehaviorSanitizer + libstdc++ assertions.
+sanitize-build: $(SAN_BINS)
+$(BS)/sat_solver: $(SOLVER_SRC) $(SOLVER_HDR)
+	@mkdir -p $(BS)
+	$(CXX) $(SANFLAGS) -o $@ $(SOLVER_SRC)
+$(BS)/rup_check: checker/rup_check.cpp checker/cnf.hpp
+	@mkdir -p $(BS)
+	$(CXX) $(SANFLAGS) -o $@ $<
+$(BS)/model_check: checker/model_check.cpp checker/cnf.hpp
+	@mkdir -p $(BS)
+	$(CXX) $(SANFLAGS) -o $@ $<
+$(BS)/brute: tools/brute.cpp checker/cnf.hpp
+	@mkdir -p $(BS)
+	$(CXX) $(SANFLAGS) -o $@ $<
+$(BS)/dpll: baseline/dpll.cpp src/dimacs.hpp
+	@mkdir -p $(BS)
+	$(CXX) $(SANFLAGS) -o $@ $<
 
-# Unit tests and a fuzz run with bounds checks, AddressSanitizer and UBSan.
-sanitize:
-	@mkdir -p $(BUILD)/san
-	$(CXX) -std=c++20 -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all \
-		-D_GLIBCXX_ASSERTIONS tests/unit_tests.cpp -o $(BUILD)/san/unit_tests
-	$(CXX) -std=c++20 -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all \
-		-D_GLIBCXX_ASSERTIONS tests/fuzz.cpp -o $(BUILD)/san/fuzz
-	$(BUILD)/san/unit_tests
-	$(BUILD)/san/fuzz 7 0.05
-
-# Plants bugs into a copy of the solver and checks that the tests notice.
-mutation:
-	tests/mutation.sh
-
-# Large inputs (n, q up to 200000): time, memory, and a cross-check.
-bench: all
-	bench/bench.sh $(BUILD)
+# ---- tests (see tests/README.md) -------------------------------------------
+test: all                 ## quick suite, about a minute
+	$(PYTHON) tests/run_all.py --quick
+test-full: all            ## everything, including the large-scale instances
+	$(PYTHON) tests/run_all.py
+sanitize: sanitize-build  ## quick suite on the sanitizer builds
+	$(PYTHON) tests/run_all.py --quick --bin-dir $(BS)
+mutation: all             ## inject bugs into solver / checker and see whether tests notice
+	$(PYTHON) tests/mutation.py
+bench: all                ## baseline vs. final solver, ablations
+	$(PYTHON) bench/run_bench.py
 
 clean:
-	rm -rf $(BUILD) fuzz-failure.in
+	rm -rf $(B)
+
+.PHONY: all sanitize-build test test-full sanitize mutation bench clean
