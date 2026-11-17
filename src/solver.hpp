@@ -56,6 +56,7 @@ struct Options {
     bool targetPhase = true;     // in stable mode, steer towards the best assignment seen
     RestartPolicy restart = RestartPolicy::EMA;
     bool initialPhase = false;   // value tried first for a never-assigned variable
+    bool occurrencePhase = false; // ... unless the variable occurs more often with the other sign
     // --- resource limits (0 = unlimited) -----------------------------------------
     double timeLimitSec = 0;
     uint64_t conflictLimit = 0;
@@ -216,6 +217,7 @@ private:
     std::vector<Var> heap_;
     std::vector<int> heapPos_;
     std::vector<uint8_t> phase_;        // saved phase: 1 = assign the negative literal
+    std::vector<uint8_t> origPhase_;    // phase used for a variable that was never assigned
     std::vector<uint8_t> targetPhase_;  // 0/1 as phase_, 2 = none
     std::vector<uint8_t> bestPhase_;
     uint32_t targetAssigned_ = 0, bestAssigned_ = 0;

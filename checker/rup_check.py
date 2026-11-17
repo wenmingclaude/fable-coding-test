@@ -164,10 +164,13 @@ def check(num_vars, clauses, proof_path, assume=(), ignore_deletions=False, expl
     if explain is not None and ck.top_trace:
         explain("Units implied by the formula itself: " + " ".join(str(l) for l, _ in ck.top_trace))
     lemmas = 0
+    steps = read_proof(proof_path)
     try:
-        for delete, lits, line in read_proof(proof_path):
-            if ck.refuted:
+        while not ck.refuted:      # nothing after the refutation is read
+            step = next(steps, None)
+            if step is None:
                 break
+            delete, lits, line = step
             if any(abs(l) > num_vars for l in lits):
                 return False, "line %d: malformed proof line" % line
             if delete:

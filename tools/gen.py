@@ -243,7 +243,7 @@ def chain(n, unsat, seed):
 
 def ladder(n, unsat):
     """Two implication chains a_1 -> ... -> a_n and b_1 -> ... -> b_n with
-    (a_1 ∨ b_1); with unsat additionally (¬a_n ∨ ¬b_n is replaced by) ¬a_n, ¬b_n.
+    (a_1 ∨ b_1); with unsat additionally (¬a_n ∨ ¬b_n), a_1 -> b_n and b_1 -> a_n.
     No unit clause at the start: one decision triggers a propagation of length n."""
     a = lambda i: i
     b = lambda i: n + i
@@ -256,6 +256,18 @@ def ladder(n, unsat):
         clauses.append([-a(1), b(n)])   # a_1 -> b_n
         clauses.append([-b(1), a(n)])   # b_1 -> a_n
     return 2 * n, clauses, "UNSAT" if unsat else "SAT"
+
+
+def cycle(n):
+    """2-colouring of a cycle with n vertices: unsatisfiable iff n is odd.  One
+    decision propagates around the whole cycle, so the first conflict involves
+    an implication chain of length n."""
+    clauses = []
+    for i in range(1, n + 1):
+        j = i % n + 1
+        clauses.append([i, j])
+        clauses.append([-i, -j])
+    return n, clauses, "UNSAT" if n % 2 else "SAT"
 
 
 def ordering(n):
@@ -327,6 +339,7 @@ FAMILIES = {
     "tseitin": (tseitin_grid, "width height seed", [int, int, int]),
     "chain": (chain, "n unsat(0|1) seed", [int, int, int]),
     "ladder": (ladder, "n unsat(0|1)", [int, int]),
+    "cycle": (cycle, "n", [int]),
     "ordering": (ordering, "n", [int]),
     "duplicates": (duplicates, "n m copies seed", [int, int, int, int]),
     "with-core": (with_core, "n m k holes seed", [int, int, int, int, int]),

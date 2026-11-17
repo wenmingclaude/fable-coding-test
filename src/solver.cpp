@@ -95,7 +95,8 @@ void Solver::init(uint32_t n) {
     reason_.assign(n, CREF_UNDEF);
     trail_.assign(n, 0);
     activity_.assign(n, 0.0);
-    phase_.assign(n, opt_.initialPhase ? 0 : 1);
+    origPhase_.assign(n, opt_.initialPhase ? 0 : 1);
+    phase_ = origPhase_;
     targetPhase_.assign(n, 2);
     bestPhase_.assign(n, 2);
     seen_.assign(n, 0);
@@ -741,11 +742,10 @@ void Solver::rephase() {
     stats_.rephases++;
     const uint64_t k = rephaseCount_++;
     const char kind = k == 0 ? 'O' : k == 1 ? 'I' : "BRBF"[(k - 2) % 4];
-    const uint8_t original = opt_.initialPhase ? 0 : 1;
     for (Var v = 0; v < numVars_; v++) {
         switch (kind) {
-            case 'O': phase_[v] = original; break;
-            case 'I': phase_[v] = original ^ 1; break;
+            case 'O': phase_[v] = origPhase_[v]; break;
+            case 'I': phase_[v] = origPhase_[v] ^ 1; break;
             case 'B': if (bestPhase_[v] != 2) phase_[v] = bestPhase_[v]; break;
             case 'R':
                 rngState_ ^= rngState_ << 13;
@@ -862,6 +862,15 @@ Result Solver::search() {
 }
 
 Result Solver::solve(const std::vector<Lit>& assumptions) {
+    if (!started_ && opt_.occurrencePhase) {
+        // Try first the value that satisfies more of the clauses the variable occurs in.
+        std::vector<uint32_t> occ(2 * size_t(numVars_), 0);
+        for (const CRef r : clauses_)
+            for (uint32_t k = 0; k < csize(r); k++) occ[clits(r)[k]]++;
+        for (Var v = 0; v < numVars_; v++)
+            if (occ[2 * v] != occ[2 * v + 1]) origPhase_[v] = occ[2 * v + 1] > occ[2 * v];
+        phase_ = origPhase_;
+    }
     started_ = true;
     model_.clear();
     core_.clear();
@@ -870,6 +879,10 @@ Result Solver::solve(const std::vector<Lit>& assumptions) {
     Result r = Result::UNSAT;
     if (ok_) {
         assumptions_ = assumptions;
+        // Every assumption opens a decision level (possibly an empty one), so
+        // levels can exceed the number of variables.
+        if (lbdStamp_.size() < size_t(numVars_) + assumptions.size() + 2)
+            lbdStamp_.resize(size_t(numVars_) + assumptions.size() + 2, 0);
         r = search();
         cancelUntil(0);
     }

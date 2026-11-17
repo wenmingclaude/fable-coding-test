@@ -176,6 +176,8 @@ int main(int argc, char** argv) {
         else if (a == "--restart=none") opt.restart = RestartPolicy::NONE;
         else if (a == "--phase=0") opt.initialPhase = false;
         else if (a == "--phase=1") opt.initialPhase = true;
+        else if (a == "--phase=occ") opt.occurrencePhase = true;
+        else if (a == "--phase=fixed") opt.occurrencePhase = false;
         else if (a == "-h" || a == "--help") {
             fputs(USAGE, stdout);
             return 0;
