@@ -31,6 +31,11 @@ $(B)/dpll: baseline/dpll.cpp src/dimacs.hpp
 	@mkdir -p $(B)
 	$(CXX) $(CXXFLAGS) -o $@ $<
 
+# Experiment E1 (docs/RESULTS.md): software prefetch of watch lists.  Not part of `all`.
+$(B)/sat_solver_prefetch: $(SOLVER_SRC) $(SOLVER_HDR)
+	@mkdir -p $(B)
+	$(CXX) $(CXXFLAGS) -DSAT_PREFETCH -o $@ $(SOLVER_SRC)
+
 # The same programs under AddressSanitizer + UndefinedBehaviorSanitizer + libstdc++ assertions.
 sanitize-build: $(SAN_BINS)
 $(BS)/sat_solver: $(SOLVER_SRC) $(SOLVER_HDR)

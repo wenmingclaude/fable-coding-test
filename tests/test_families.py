@@ -102,5 +102,10 @@ def run_group(ctx):
             "%.2f" % (v.proof_bytes / 1e6) if v.status == "UNSAT" else "-",
             "%.2f" % v.check_time if v.status == "UNSAT" else "-")
 
-    rep.rows += ctx.map(one, INSTANCES)
+    instances = INSTANCES
+    if ctx.slow > 1:
+        # Sanitizer builds are an order of magnitude slower; the hard tier would only produce timeouts.
+        instances = [i for i in INSTANCES if i[3] == "easy"]
+        rep.notes.append("sanitizer build: hard tier skipped")
+    rep.rows += ctx.map(one, instances)
     return rep

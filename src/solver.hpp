@@ -55,8 +55,8 @@ struct Options {
     bool stable = true;          // alternate focused / stable search modes
     bool targetPhase = true;     // in stable mode, steer towards the best assignment seen
     RestartPolicy restart = RestartPolicy::EMA;
-    bool initialPhase = false;   // value tried first for a never-assigned variable
-    bool occurrencePhase = false; // ... unless the variable occurs more often with the other sign
+    bool occurrencePhase = true; // first value of a variable: the sign it occurs with more often ...
+    bool initialPhase = false;   // ... or, on a tie or when switched off, this fixed value
     bool trace = false;          // print every decision, propagation, conflict and learnt clause
     // --- resource limits (0 = unlimited) -----------------------------------------
     double timeLimitSec = 0;

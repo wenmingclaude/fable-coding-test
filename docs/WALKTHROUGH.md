@@ -40,7 +40,7 @@ F4  (10 ∨ 11 ∨ 12)                 F8  (-4 ∨ -7)       F14 (-5 ∨ -8)    
 
 ## 2. 求解器的搜索记录
 
-`build/sat_solver --trace examples/php-4-3.cnf` 的输出，逐段加注释。"level" 是当前已做了几个猜测。
+`build/sat_solver --trace examples/php-4-3.cnf` 的输出（每行开头的 `c trace` 已略去），逐段加注释。"level" 是当前已做了几个猜测。
 
 ### 第一次撞墙
 

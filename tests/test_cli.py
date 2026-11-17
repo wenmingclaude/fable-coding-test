@@ -120,6 +120,17 @@ def run_group(ctx):
         if rc != 0 or "s UNKNOWN" not in text:
             raise Failure("conflict limit did not produce s UNKNOWN (rc=%s)" % rc)
         rep.count("resource limit yields UNKNOWN")
+        rc, text, _, _ = run([ctx.solver, "--time-limit", "0.2", path], timeout=120 * ctx.slow)
+        if rc != 0 or "s UNKNOWN" not in text:
+            raise Failure("time limit did not produce s UNKNOWN (rc=%s)" % rc)
+        rep.count("resource limit yields UNKNOWN")
+        big = ctx.path(".cnf")
+        n, clauses, _ = gen.planted_ksat(20000, 80000, 3, 9)
+        cnf.write_cnf(big, n, clauses)
+        rc, text, _, _ = run([ctx.solver, "--mem-limit", "1", big], timeout=120 * ctx.slow)
+        if rc != 0 or "s UNKNOWN" not in text:
+            raise Failure("memory limit did not produce s UNKNOWN (rc=%s)" % rc)
+        rep.count("resource limit yields UNKNOWN")
         # a proof file written during a SAT run must not verify
         path = ctx.path(".cnf")
         n, clauses, _ = gen.planted_ksat(60, 250, 3, 5)

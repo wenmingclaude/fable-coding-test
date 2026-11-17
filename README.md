@@ -48,7 +48,7 @@ sat_solver [选项] formula.cnf
   --time-limit SEC  --conflict-limit N  --mem-limit MB     到达上限时输出 s UNKNOWN
   --trace                 把每次决策、传播、冲突、学到的子句打印出来（教学用）
   --no-minimize --no-phase-saving --no-reduce --no-blocker --no-inline-binary
-  --no-vsids --no-simplify --no-stable --no-target-phase --restart=ema|luby|none --phase=0|1|occ
+  --no-vsids --no-simplify --no-stable --no-target-phase --restart=ema|luby|none --phase=occ|0|1
                           逐项关闭某个特性（用于消融实验）
 退出码：10 = SAT，20 = UNSAT，0 = UNKNOWN 或增量模式，1 = 输入/用法错误
 ```

@@ -21,7 +21,7 @@ from common import Failure, Report, brute_status, certify, check_proof, run, wri
 ABLATIONS = [
     ["--no-minimize"], ["--no-phase-saving"], ["--no-reduce"], ["--no-blocker"], ["--no-inline-binary"],
     ["--no-vsids"], ["--no-simplify"], ["--no-stable"], ["--no-target-phase"], ["--restart=luby"],
-    ["--restart=none"], ["--phase=1"], ["--proof-no-deletions"],
+    ["--restart=none"], ["--phase=1"], ["--phase=0"], ["--proof-no-deletions"],
     ["--no-blocker", "--no-inline-binary", "--no-minimize", "--no-vsids", "--restart=none", "--no-simplify"],
 ]
 

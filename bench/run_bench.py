@@ -96,8 +96,8 @@ CONFIGS = {
     "-target-phase": ["--no-target-phase"],
     "restart=luby": ["--restart=luby"],
     "restart=none": ["--restart=none"],
+    "phase=0": ["--phase=0"],
     "phase=1": ["--phase=1"],
-    "phase=occ": ["--phase=occ"],
 }
 
 

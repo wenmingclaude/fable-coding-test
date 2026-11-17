@@ -41,7 +41,7 @@ static const char* USAGE =
     "ablation switches (for benchmarks; all features are on by default)\n"
     "  --no-minimize --no-phase-saving --no-reduce --no-blocker --no-inline-binary\n"
     "  --no-vsids --no-simplify --no-stable --no-target-phase\n"
-    "  --restart=ema|luby|none   --phase=0|1\n";
+    "  --restart=ema|luby|none   --phase=occ|0|1  (initial value: majority sign / false / true)\n";
 
 static double nowSec() {
     using namespace std::chrono;
@@ -180,10 +180,9 @@ int main(int argc, char** argv) {
         else if (a == "--restart=ema") opt.restart = RestartPolicy::EMA;
         else if (a == "--restart=luby") opt.restart = RestartPolicy::LUBY;
         else if (a == "--restart=none") opt.restart = RestartPolicy::NONE;
-        else if (a == "--phase=0") opt.initialPhase = false;
-        else if (a == "--phase=1") opt.initialPhase = true;
+        else if (a == "--phase=0") opt.initialPhase = false, opt.occurrencePhase = false;
+        else if (a == "--phase=1") opt.initialPhase = true, opt.occurrencePhase = false;
         else if (a == "--phase=occ") opt.occurrencePhase = true;
-        else if (a == "--phase=fixed") opt.occurrencePhase = false;
         else if (a == "-h" || a == "--help") {
             fputs(USAGE, stdout);
             return 0;

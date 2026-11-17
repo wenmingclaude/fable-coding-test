@@ -176,6 +176,9 @@ inline void Solver::enqueue(Lit p, CRef from) {
     level_[v] = decisionLevel();
     reason_[v] = from;
     trail_[trailSize_++] = p;
+#ifdef SAT_PREFETCH  // experiment E1 (docs/RESULTS.md): fetch the watch list that will be scanned next
+    __builtin_prefetch(watches_[p ^ 1].data());
+#endif
 }
 
 // Undo every assignment above `level`.  Because learnt clauses are never
