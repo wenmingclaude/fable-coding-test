@@ -36,6 +36,11 @@ $(B)/sat_solver_prefetch: $(SOLVER_SRC) $(SOLVER_HDR)
 	@mkdir -p $(B)
 	$(CXX) $(CXXFLAGS) -DSAT_PREFETCH -o $@ $(SOLVER_SRC)
 
+# Experiment E2: initial decision order by number of occurrences.  Not part of `all`.
+$(B)/sat_solver_occorder: $(SOLVER_SRC) $(SOLVER_HDR)
+	@mkdir -p $(B)
+	$(CXX) $(CXXFLAGS) -DSAT_OCC_ORDER -o $@ $(SOLVER_SRC)
+
 # The same programs under AddressSanitizer + UndefinedBehaviorSanitizer + libstdc++ assertions.
 sanitize-build: $(SAN_BINS)
 $(BS)/sat_solver: $(SOLVER_SRC) $(SOLVER_HDR)
@@ -63,8 +68,11 @@ sanitize: sanitize-build  ## quick suite on the sanitizer builds
 	$(PYTHON) tests/run_all.py --quick --bin-dir $(BS)
 mutation: all             ## inject bugs into solver / checker and see whether tests notice
 	$(PYTHON) tests/mutation.py
-bench: all                ## baseline vs. final solver, ablations
-	$(PYTHON) bench/run_bench.py
+bench: all                ## baseline vs. final solver, ablations (see docs/RESULTS.md for the exact commands used)
+	$(PYTHON) bench/run_bench.py --limit 20 --configs dpll,cdcl --jobs 1 --proof --out build/bench_main
+	$(PYTHON) bench/run_bench.py --limit 20 --jobs 2 --out build/bench_ablation
+	$(PYTHON) bench/seeds_bench.py --seeds 8 --limit 30 --jobs 2 --out build/bench_seeds.md
+	$(PYTHON) bench/incremental_bench.py --out build/bench_incremental.md
 
 clean:
 	rm -rf $(B)

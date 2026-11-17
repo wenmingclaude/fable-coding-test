@@ -248,6 +248,18 @@ int usage() {
     return 2;
 }
 
+// Peak resident memory of this process (VmHWM; see src/main.cpp for why not getrusage).
+double peakMemMB() {
+    FILE* f = fopen("/proc/self/status", "r");
+    if (!f) return -1;
+    char line[256];
+    long kb = -1;
+    while (fgets(line, sizeof line, f))
+        if (sscanf(line, "VmHWM: %ld kB", &kb) == 1) break;
+    fclose(f);
+    return kb / 1024.0;
+}
+
 double nowSec() {
     using namespace std::chrono;
     return duration<double>(steady_clock::now().time_since_epoch()).count();
@@ -339,6 +351,7 @@ int main(int argc, char** argv) {
     printf("c formula: %d variables, %zu clauses\n", f.numVars, f.numClauses());
     printf("c lemmas checked: %llu, deletions applied: %llu, deletions ignored: %llu\n", lemmas, deletions, ignored);
     printf("c check time: %.3f s\n", nowSec() - t0);
+    printf("c peak memory: %.1f MB\n", peakMemMB());
     if (checker.refuted()) {
         puts("s VERIFIED");
         return 0;

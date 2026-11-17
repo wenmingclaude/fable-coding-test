@@ -218,12 +218,23 @@ def classify(message):
                        ("invalid model", "invalid model"), ("invalid proof", "invalid proof"),
                        ("invalid core", "invalid core"), ("core", "invalid core"),
                        ("timed out", "hang / timeout"), ("timeout", "hang / timeout"),
-                       ("rc=-", "crash"), ("crash", "crash"), ("disagree", "checkers disagree"),
-                       ("expected", "hand-written case"), ("session proof", "invalid proof"),
-                       ("brute", "disagrees with brute force"), ("exit code", "wrong exit code")):
+                       ("rc=-", "crash"), ("crash", "crash"), ("disagree", "disagreement"),
+                       ("hand-written", "hand-written case"), ("not rejected", "malformed input accepted"),
+                       ("session proof", "invalid proof"), ("valid proof not accepted", "valid proof rejected"),
+                       ("does not refute", "invalid proof"), ("exit code", "wrong exit code"),
+                       ("status lines", "wrong output"), ("unknown", "wrong output"),
+                       ("brute force failed", "tool failure")):
         if key in m:
             return label
     return "other failure"
+
+
+def short(message, n=110):
+    """First part of a failure message, without paths, for the Markdown table."""
+    import re
+    m = re.sub(r"/\S*/(f\d+\.\w+)", r"\1", message)
+    m = m.replace("|", "/").replace("\n", " ")
+    return m[:n] + ("…" if len(m) > n else "")
 
 
 def main():
@@ -270,10 +281,12 @@ def main():
                                                       (" (" + ", ".join(survived) + ")") if survived else ""))
     if args.out:
         with open(args.out, "w") as f:
-            f.write("| mutant | category | injected bug | result | detected as | by test group |\n|---|---|---|---|---|---|\n")
+            f.write("| mutant | category | injected bug | result | detected as | by test group | first failure reported |\n"
+                    "|---|---|---|---|---|---|---|\n")
             for m, verdict, group, message, _ in rows:
-                f.write("| `%s` | %s | %s | %s | %s | %s |\n" % (
-                    m[0], m[1], m[3], verdict, classify(message) if verdict == "killed" else "", group))
+                f.write("| `%s` | %s | %s | %s | %s | %s | %s |\n" % (
+                    m[0], m[1], m[3], verdict, classify(message) if verdict == "killed" else "",
+                    group.split(" (")[0], short(message) if verdict == "killed" else ""))
             f.write("\n%d mutants: %d killed, %d survived.\n" % (len(rows), killed, len(survived)))
     return 0
 

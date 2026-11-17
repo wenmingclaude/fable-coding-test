@@ -74,9 +74,24 @@ class Context:
             return list(pool.map(fn, items))
 
 
+def reported_peak_mb(text):
+    """The 'c peak memory' value a program printed about itself, or None.
+    (The rusage of a child is not used: Linux counts the parent's memory at
+    fork time into the child's ru_maxrss, so it is an upper bound only.)"""
+    for line in text.splitlines():
+        if line.startswith("c peak memory"):
+            try:
+                return float(line.replace(":", " ").split()[3])
+            except (ValueError, IndexError):
+                return None
+    return None
+
+
 def run(cmd, timeout=None, stdout_path=None, cap_scale=1):
     """Returns (exit_code, stdout_text, seconds, peak_rss_mb).  exit_code is
-    None on timeout and negative when the process died from a signal."""
+    None on timeout and negative when the process died from a signal.
+    peak_rss_mb is what the program reported about itself if it did, else
+    the rusage upper bound."""
     start = time.time()
     if TIMEOUT_CAP and (timeout is None or timeout > TIMEOUT_CAP * cap_scale):
         timeout = TIMEOUT_CAP * cap_scale
@@ -99,7 +114,9 @@ def run(cmd, timeout=None, stdout_path=None, cap_scale=1):
         out.seek(0)
         text = out.read()
         rc = None if timed_out else proc.returncode
-        return rc, text + (("\n[stderr] " + err) if err.strip() else ""), time.time() - start, usage.ru_maxrss / 1024.0
+        peak = reported_peak_mb(text)
+        return rc, text + (("\n[stderr] " + err) if err.strip() else ""), time.time() - start, \
+            peak if peak is not None else usage.ru_maxrss / 1024.0
     finally:
         out.close()
 

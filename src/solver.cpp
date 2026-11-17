@@ -904,6 +904,13 @@ Result Solver::solve(const std::vector<Lit>& assumptions) {
         for (Var v = 0; v < numVars_; v++)
             if (occ[2 * v] != occ[2 * v + 1]) origPhase_[v] = occ[2 * v + 1] > occ[2 * v];
         phase_ = origPhase_;
+#ifdef SAT_OCC_ORDER  // experiment E2 (docs/RESULTS.md): decide frequent variables first
+        for (Var v = 0; v < numVars_; v++) activity_[v] = 1e-6 * double(occ[2 * v] + occ[2 * v + 1]);
+        heap_.clear();
+        for (Var v = 0; v < numVars_; v++) heapPos_[v] = -1;
+        for (Var v = 0; v < numVars_; v++)
+            if (vals_[2 * v] == 0) heapInsert(v);
+#endif
     }
     started_ = true;
     model_.clear();

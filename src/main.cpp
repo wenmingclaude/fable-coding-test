@@ -48,7 +48,19 @@ static double nowSec() {
     return duration<double>(steady_clock::now().time_since_epoch()).count();
 }
 
+// Peak resident memory of this program.  /proc/self/status:VmHWM is used where
+// available because getrusage's ru_maxrss also counts the memory the parent
+// process had when it forked us (measured: a 13 MB run reported as 813 MB
+// when started from an 800 MB Python process).
 static double peakMemMB() {
+    if (FILE* f = fopen("/proc/self/status", "r")) {
+        char line[256];
+        long kb = -1;
+        while (fgets(line, sizeof line, f))
+            if (sscanf(line, "VmHWM: %ld kB", &kb) == 1) break;
+        fclose(f);
+        if (kb >= 0) return kb / 1024.0;
+    }
     struct rusage ru;
     getrusage(RUSAGE_SELF, &ru);
     return ru.ru_maxrss / 1024.0;
