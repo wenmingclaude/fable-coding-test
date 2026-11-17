@@ -57,6 +57,7 @@ struct Options {
     RestartPolicy restart = RestartPolicy::EMA;
     bool initialPhase = false;   // value tried first for a never-assigned variable
     bool occurrencePhase = false; // ... unless the variable occurs more often with the other sign
+    bool trace = false;          // print every decision, propagation, conflict and learnt clause
     // --- resource limits (0 = unlimited) -----------------------------------------
     double timeLimitSec = 0;
     uint64_t conflictLimit = 0;
@@ -65,6 +66,7 @@ struct Options {
 
 struct Stats {
     uint64_t conflicts = 0, decisions = 0, propagations = 0, restarts = 0;
+    uint64_t watchVisits = 0, binaryVisits = 0, blockerSkips = 0;  // work done inside propagate()
     uint64_t reductions = 0, simplifications = 0, garbageCollections = 0;
     uint64_t learntClauses = 0, learntUnits = 0, learntBinaries = 0;
     uint64_t learntLitsBeforeMin = 0, learntLitsAfterMin = 0;
@@ -181,6 +183,7 @@ private:
     void refute();  // conflict at level 0: emit the empty clause
     bool limitReached();
     void syncProofStats();
+    void traceLits(const char* what, const Lit* lits, size_t n) const;
     Lit* reasonLits(CRef r, Lit implied, uint32_t& size);
 
     // activity heap

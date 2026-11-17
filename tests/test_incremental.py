@@ -39,6 +39,18 @@ def ask(ctx, formula, queries, extra=()):
     return results, proof
 
 
+_lemma_cache = {}
+
+
+def lemmas(proof):
+    """The set of clauses added by a proof file (as frozensets of literals)."""
+    if proof not in _lemma_cache:
+        with open(proof) as f:
+            _lemma_cache[proof] = {frozenset(int(t) for t in line.split()[:-1])
+                                   for line in f if line.strip() and not line.startswith("d")}
+    return _lemma_cache[proof]
+
+
 def verify_answers(ctx, rep, formula, n, clauses, queries, results, proof, truth_of):
     """truth_of(assumptions) -> 'SAT' / 'UNSAT', computed without the incremental solver."""
     for q, res in zip(queries, results):
@@ -62,6 +74,9 @@ def verify_answers(ctx, rep, formula, n, clauses, queries, results, proof, truth
             ok, msg, _, _ = check_proof(ctx, formula, proof, assume=core)
             if not ok:
                 raise Failure("session proof does not refute formula ∧ core %s: %s: %s" % (core, where, msg[-200:]))
+            # PROOF_FORMAT.md 3.5: the clause (¬c1 ∨ ... ∨ ¬ck) itself is a lemma of the session proof
+            if frozenset(-c for c in core) not in lemmas(proof):
+                raise Failure("INVALID PROOF: the clause justifying core %s was not logged: %s" % (core, where))
             rep.count("UNSAT-under-assumptions answers: core verified (independent solve + proof)")
             rep.count("core literals", len(core))
             rep.count("assumption literals in those queries", len(set(q)))

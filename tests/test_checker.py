@@ -17,7 +17,7 @@ import random
 
 import cnf
 import gen
-from common import Failure, Report, brute_status, check_proof, check_proof_reference, run, write_formula
+from common import Failure, Report, brute_status, check_model, check_proof, check_proof_reference, run, write_formula
 
 # (description, formula text, proof text, verified?, verified with --ignore-deletions?)
 HAND = [
@@ -75,6 +75,33 @@ HAND = [
      "p cnf 2 4\n1 2 0\n-1 2 0\n1 -2 0\n-1 -2 0\n", "2 0\nd\nnonsense", True, True),
     ("'d' applies to the next clause, line breaks are not significant",
      "p cnf 2 4\n1 2 0\n-1 2 0\n1 -2 0\n-1 -2 0\n", "d\n2 0\n0\n", False, False),
+]
+
+
+# The SAT certificate checker gets the same treatment.
+# (description, formula text, solver output text, accepted?)
+MODEL_FORMULA = "p cnf 4 3\n1 2 0\n-1 3 0\n-2 -3 0\n"      # variable 4 occurs nowhere
+MODELS = [
+    ("correct model", "s SATISFIABLE\nv 1 -2 3 -4 0\n", True),
+    ("correct model split over lines, with comments", "c hi\ns SATISFIABLE\nv 1\nc mid\nv -2\nv 3 4 0\n", True),
+    ("other correct model", "s SATISFIABLE\nv -1 2 -3 4 0\n", True),
+    ("first clause falsified", "s SATISFIABLE\nv -1 -2 3 4 0\n", False),
+    ("middle clause falsified", "s SATISFIABLE\nv 1 -2 -3 4 0\n", False),
+    ("last clause falsified", "s SATISFIABLE\nv 1 2 3 4 0\n", False),
+    ("used variable without a value", "s SATISFIABLE\nv 1 3 4 0\n", False),
+    ("unused variable without a value", "s SATISFIABLE\nv 1 -2 3 0\n", False),
+    ("variable with both values", "s SATISFIABLE\nv 1 -2 3 2 4 0\n", False),
+    ("unused variable with both values", "s SATISFIABLE\nv 1 -2 3 4 -4 0\n", False),
+    ("same literal twice is harmless", "s SATISFIABLE\nv 1 1 -2 3 4 0\n", True),
+    ("value list not terminated", "s SATISFIABLE\nv 1 -2 3 4\n", False),
+    ("unknown variable", "s SATISFIABLE\nv 1 -2 3 4 5 0\n", False),
+    ("status is UNSATISFIABLE", "s UNSATISFIABLE\nv 1 -2 3 4 0\n", False),
+    ("status is UNKNOWN", "s UNKNOWN\nv 1 -2 3 4 0\n", False),
+    ("no status line", "v 1 -2 3 4 0\n", False),
+    ("two status lines", "s SATISFIABLE\ns SATISFIABLE\nv 1 -2 3 4 0\n", False),
+    ("values hidden in a comment", "s SATISFIABLE\nc v 1 -2 3 4 0\n", False),
+    ("garbage value", "s SATISFIABLE\nv 1 -2 x 4 0\n", False),
+    ("empty output", "", False),
 ]
 
 
@@ -156,6 +183,36 @@ def run_group(ctx):
 
     for case in HAND:
         rep.guard(hand, case)
+
+    def model_case(case):
+        name, output_text, want = case
+        formula = ctx.path(".cnf")
+        open(formula, "w").write(MODEL_FORMULA)
+        out = ctx.path(".out")
+        open(out, "w").write(output_text)
+        ok, _ = check_model(ctx, formula, out)
+        if ok != want:
+            raise Failure("model_check case %r: expected %s, got %s" % (name, want, ok))
+        # the Python substitution check must agree whenever a model is present
+        try:
+            res = cnf.parse_solver_output(output_text)
+        except ValueError:   # not even numbers: nothing to substitute
+            res = []
+        if len(res) == 1 and res[0]["status"] == "SAT" and res[0]["model_terminated"]:
+            n, clauses = cnf.read_cnf(formula)
+            try:
+                py = cnf.model_satisfies(n, clauses, res[0]["model"]) is None
+            except Exception:  # noqa: BLE001
+                py = False
+            if py != want:
+                raise Failure("python model check disagrees on case %r" % name)
+        ok2, _ = check_model(ctx, formula, out, assume=[-2])
+        if ok2 != (want and "-2" in output_text.split()):
+            raise Failure("model_check --assume gives the wrong verdict on case %r" % name)
+        rep.count("hand-written models with the expected verdict")
+
+    for case in MODELS:
+        rep.guard(model_case, case)
 
     def corrupted(seed):
         rng = random.Random(seed)

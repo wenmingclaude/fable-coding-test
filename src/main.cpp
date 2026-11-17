@@ -26,6 +26,7 @@ static const char* USAGE =
     "  --proof <file>         write an UNSAT proof (RUP clause additions + 'd' deletion hints)\n"
     "  --proof-no-deletions   write clause additions only\n"
     "  --no-model             do not print the 'v' lines\n"
+    "  --trace                print every decision, propagation, conflict and learnt clause\n"
     "  -q, --quiet            do not print statistics\n"
     "\n"
     "incremental solving\n"
@@ -74,6 +75,10 @@ static void printStats(const Solver& s, double parseTime, double solveTime) {
     printf("c conflicts        %llu\n", (unsigned long long)st.conflicts);
     printf("c decisions        %llu\n", (unsigned long long)st.decisions);
     printf("c propagations     %llu\n", (unsigned long long)st.propagations);
+    const double wv = st.watchVisits ? 100.0 / double(st.watchVisits) : 0.0;
+    printf("c watch visits     %llu (%.1f%% binary, %.1f%% skipped by blocker, %.1f%% touched a clause)\n",
+           (unsigned long long)st.watchVisits, wv * double(st.binaryVisits), wv * double(st.blockerSkips),
+           wv * double(st.watchVisits - st.binaryVisits - st.blockerSkips));
     printf("c restarts         %llu\n", (unsigned long long)st.restarts);
     printf("c reductions       %llu (deleted %llu learnt clauses)\n", (unsigned long long)st.reductions,
            (unsigned long long)st.deletedLearnts);
@@ -162,6 +167,7 @@ int main(int argc, char** argv) {
         else if (a == "--mem-limit") opt.memLimitMB = strtoull(needArg("--mem-limit"), nullptr, 10);
         else if (a == "-q" || a == "--quiet") quiet = true;
         else if (a == "--no-model") showModel = false;
+        else if (a == "--trace") opt.trace = true;
         else if (a == "--no-minimize") opt.minimize = false;
         else if (a == "--no-phase-saving") opt.phaseSaving = false;
         else if (a == "--no-reduce") opt.reduceDB = false;

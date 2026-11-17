@@ -13,6 +13,7 @@ import sys
 import time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import common  # noqa: E402
 from common import Context  # noqa: E402
 
 GROUPS = ["cli", "fuzz", "constructive", "families", "metamorphic", "checker", "incremental", "scale"]
@@ -26,7 +27,9 @@ def main():
     ap.add_argument("--json", help="write the collected numbers to this file")
     ap.add_argument("--jobs", type=int)
     ap.add_argument("--keep", action="store_true", help="keep the temporary directory")
+    ap.add_argument("--fail-fast", action="store_true", help="stop at the first failure (used by mutation testing)")
     args = ap.parse_args()
+    common.FAIL_FAST = args.fail_fast
 
     ctx = Context(args.bin_dir, args.quick, args.jobs, args.keep)
     names = args.only.split(",") if args.only else GROUPS
@@ -51,6 +54,8 @@ def main():
         for f in rep.failures[:10]:
             print("   FAILURE: " + f)
         sys.stdout.flush()
+        if args.fail_fast and rep.failures:
+            break
     failures = sum(len(r.failures) for r in reports)
     print("\n%s  (%d groups, %.1f s)" % ("ALL TESTS PASSED" if not failures else "%d FAILURES" % failures,
                                         len(reports), time.time() - t0))

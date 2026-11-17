@@ -8,7 +8,8 @@ unused variables.  For each one:
   * the model / proof must pass the independent checkers;
   * the baseline DPLL solver must agree as well (it is tested, too);
   * on a sample, the proof is additionally replayed by the naive Python
-    checker, in additions-only mode, and by drat-trim if available;
+    checker (also under strict deletion semantics), in additions-only mode,
+    and by drat-trim if a binary is present;
   * on a sample, the solver is re-run with each ablation switch, which
     exercises code paths the default configuration rarely takes.
 """
@@ -55,8 +56,8 @@ def one(ctx, rep, seed):
         ok, _, _, _ = check_proof(ctx, path, v.proof_path, ignore_deletions=True)
         if not ok:
             raise Failure("proof rejected in additions-only mode: %s" % path)
-        rep.count("proofs re-checked (python reference + additions-only" +
-                  (" + drat-trim)" if ctx.drat_trim else ")"))
+        rep.count("proofs re-checked (python reference, strict deletions, additions-only" +
+                  (", drat-trim)" if ctx.drat_trim else ")"))
     # baseline solver must agree
     rc, text, _, _ = run([ctx.dpll, "-q", path], timeout=60 * ctx.slow)
     if {10: "SAT", 20: "UNSAT"}.get(rc) != truth:

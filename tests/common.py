@@ -29,6 +29,13 @@ class Failure(Exception):
     """A test observed something that must never happen."""
 
 
+# Mutation testing only needs to know *whether* the suite notices a bug, so it
+# stops at the first failure and caps every timeout (mutants like to hang).
+FAIL_FAST = False
+ABORT = threading.Event()
+TIMEOUT_CAP = float(os.environ.get("SAT_TEST_TIMEOUT_CAP", "0"))
+
+
 class Context:
     def __init__(self, bin_dir=None, quick=False, jobs=None, keep=False):
         self.bin_dir = os.path.abspath(bin_dir or os.path.join(ROOT, "build"))
@@ -67,10 +74,12 @@ class Context:
             return list(pool.map(fn, items))
 
 
-def run(cmd, timeout=None, stdout_path=None):
+def run(cmd, timeout=None, stdout_path=None, cap_scale=1):
     """Returns (exit_code, stdout_text, seconds, peak_rss_mb).  exit_code is
     None on timeout and negative when the process died from a signal."""
     start = time.time()
+    if TIMEOUT_CAP and (timeout is None or timeout > TIMEOUT_CAP * cap_scale):
+        timeout = TIMEOUT_CAP * cap_scale
     out = open(stdout_path, "w+") if stdout_path else tempfile.TemporaryFile("w+")
     try:
         proc = subprocess.Popen(cmd, stdout=out, stderr=subprocess.PIPE, text=True)
@@ -118,7 +127,8 @@ def check_proof(ctx, formula, proof, assume=None, ignore_deletions=False, timeou
         cmd.append("--ignore-deletions")
     if assume is not None:
         cmd += ["--assume", " ".join(map(str, assume))]
-    rc, text, secs, rss = run(cmd + [formula, proof], timeout=timeout * ctx.slow)
+    # (checking a long proof legitimately takes longer than a capped solver run)
+    rc, text, secs, rss = run(cmd + [formula, proof], timeout=timeout * ctx.slow, cap_scale=8)
     if rc not in (0, 1):
         raise Failure("rup_check crashed or timed out (rc=%s) on %s %s: %s" % (rc, formula, proof, text[-300:]))
     if (rc == 0) != ("s VERIFIED" in text):
@@ -126,11 +136,19 @@ def check_proof(ctx, formula, proof, assume=None, ignore_deletions=False, timeou
     return rc == 0, text, secs, rss
 
 
-def check_proof_reference(formula, proof, assume=(), ignore_deletions=False):
+def check_proof_reference(formula, proof, assume=(), ignore_deletions=False, strict_deletions=False):
     """Naive Python checker verdict."""
     n, clauses = cnf.read_cnf(formula)
-    ok, _ = pycheck.check(n, clauses, proof, assume, ignore_deletions)
+    ok, _ = pycheck.check(n, clauses, proof, assume, ignore_deletions, None, strict_deletions)
     return ok
+
+
+def last_proof_line(proof):
+    with open(proof, "rb") as f:
+        f.seek(0, os.SEEK_END)
+        f.seek(max(0, f.tell() - 4096))
+        lines = f.read().decode().splitlines()
+    return lines[-1].strip() if lines else ""
 
 
 def check_proof_drat_trim(ctx, formula, proof):
@@ -228,8 +246,14 @@ def certify(ctx, formula, expected=None, options=(), timeout=300, reference=Fals
             ok, msg, v.check_time, v.checker_rss = check_proof(ctx, formula, proof_path)
             if not ok:
                 raise Failure("INVALID PROOF on %s: %s" % (what, msg[-300:]))
+            if last_proof_line(proof_path) != "0":
+                raise Failure("INVALID PROOF on %s: the proof does not end with the empty clause" % what)
             if reference and not check_proof_reference(formula, proof_path):
                 raise Failure("reference checker rejects a proof accepted by rup_check: %s" % what)
+            if reference and "--proof-no-deletions" not in options and \
+                    not check_proof_reference(formula, proof_path, strict_deletions=True):
+                raise Failure("INVALID PROOF on %s: rejected under strict deletion semantics "
+                              "(a top-level literal was not logged before its reason was deleted)" % what)
             if drat_trim and ctx.drat_trim and not check_proof_drat_trim(ctx, formula, proof_path):
                 raise Failure("drat-trim rejects a proof accepted by rup_check: %s" % what)
         return v
@@ -262,9 +286,13 @@ class Report:
     def fail(self, msg):
         with self._lock:
             self.failures.append(str(msg))
+        if FAIL_FAST:
+            ABORT.set()
 
     def guard(self, fn, *args):
         """Run fn; a Failure (or any crash in the test itself) is recorded, not raised."""
+        if ABORT.is_set():
+            return None
         try:
             return fn(*args)
         except Failure as e:

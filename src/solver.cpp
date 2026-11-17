@@ -210,6 +210,7 @@ Solver::CRef Solver::propagate() {
     CRef confl = CREF_UNDEF;
     const bool useBlocker = opt_.blocker;
     const int8_t* vals = vals_.data();
+    uint64_t visits = 0, binary = 0, skipped = 0;
     while (qhead_ < trailSize_) {
         const Lit p = trail_[qhead_++];
         const Lit fl = p ^ 1;  // the literal that just became false
@@ -218,11 +219,13 @@ Solver::CRef Solver::propagate() {
         Watch* j = i;
         Watch* const end = i + ws.size();
         stats_.propagations++;
+        visits += uint64_t(end - i);
         while (i != end) {
             const Watch w = *i++;
             const int8_t bv = vals[w.blocker];
             if (w.ref & BIN_TAG) {
                 // Binary clause (fl ∨ blocker): decided without touching clause memory.
+                binary++;
                 *j++ = w;
                 if (bv > 0) continue;
                 if (bv < 0) {
@@ -233,6 +236,7 @@ Solver::CRef Solver::propagate() {
                 continue;
             }
             if (useBlocker && bv > 0) {  // clause already satisfied
+                skipped++;
                 *j++ = w;
                 continue;
             }
@@ -266,6 +270,7 @@ Solver::CRef Solver::propagate() {
             enqueue(other, w.ref);
         }
         if (confl != CREF_UNDEF) {
+            visits -= uint64_t(end - i);  // not looked at
             while (i != end) *j++ = *i++;
             ws.resize(size_t(j - ws.data()));
             qhead_ = trailSize_;
@@ -273,6 +278,9 @@ Solver::CRef Solver::propagate() {
         }
         ws.resize(size_t(j - ws.data()));
     }
+    stats_.watchVisits += visits;
+    stats_.binaryVisits += binary;
+    stats_.blockerSkips += skipped;
     return confl;
 }
 
@@ -778,13 +786,29 @@ void Solver::syncProofStats() {
 // Main loop
 // ============================================================================
 
+// --trace: a readable log of the search, for docs/WALKTHROUGH.md.
+void Solver::traceLits(const char* what, const Lit* lits, size_t n) const {
+    printf("c trace  %s", what);
+    for (size_t i = 0; i < n; i++) printf(" %d", toDimacs(lits[i]));
+    printf("\n");
+}
+
 Result Solver::search() {
     const uint64_t arenaBudget = opt_.memLimitMB * (1024 * 1024 / 4) / 2;  // words; half the budget
     for (;;) {
+        const uint32_t before = trailSize_;
         const CRef confl = propagate();
+        if (opt_.trace && trailSize_ > before) traceLits("  forced:", &trail_[before], trailSize_ - before);
         if (confl != CREF_UNDEF) {
             stats_.conflicts++;
+            if (opt_.trace) {
+                char head[80];
+                snprintf(head, sizeof head, "CONFLICT %llu at level %d: every literal is false in",
+                         (unsigned long long)stats_.conflicts, decisionLevel());
+                traceLits(head, clits(confl), csize(confl));
+            }
             if (decisionLevel() == 0) {
+                if (opt_.trace) printf("c trace  no decision is involved: the formula is unsatisfiable\n");
                 // A conflict that depends on no decision: F is unsatisfiable.
                 refute();
                 return Result::UNSAT;
@@ -794,6 +818,10 @@ Result Solver::search() {
             uint32_t lbd;
             analyze(confl, btLevel, lbd);
             cancelUntil(btLevel);
+            if (opt_.trace) {
+                traceLits("  learnt clause:", learnt_.data(), learnt_.size());
+                printf("c trace    back to level %d, where it forces %d\n", btLevel, toDimacs(learnt_[0]));
+            }
             proof_.add(learnt_.data(), uint32_t(learnt_.size()));  // logged before it is ever used
             stats_.learntClauses++;
             if (learnt_.size() == 1) {
@@ -820,6 +848,7 @@ Result Solver::search() {
         }
         if (restartDue()) {
             restart();
+            if (opt_.trace) printf("c trace  restart (all decisions undone, learnt clauses kept)\n");
             continue;
         }
         if (opt_.reduceDB && stats_.conflicts >= nextReduce_) {
@@ -858,6 +887,8 @@ Result Solver::search() {
         }
         newDecisionLevel();
         enqueue(next, CREF_UNDEF);
+        if (opt_.trace) printf("c trace  level %d: %s %d\n", decisionLevel(),
+                               decisionLevel() <= int(assumptions_.size()) ? "assume" : "decide", toDimacs(next));
     }
 }
 

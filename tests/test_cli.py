@@ -31,6 +31,10 @@ VALID = [
     ("comment token after clause on same line", "p cnf 2 2\n1 2 0 c trailing 5 0\n-1 0\n", "SAT"),
     ("explicit plus sign", "p cnf 2 2\n+1 +2 0\n-1 0\n", "SAT"),
     ("unit chain to conflict", "p cnf 3 4\n1 0\n-1 2 0\n-2 3 0\n-3 0\n", "UNSAT"),
+    # x2 is forced at top level by (-1 2); that clause is then deleted as satisfied, and x2 is
+    # needed again to shorten (-2 3 4).  The proof is only valid for a checker that honours
+    # deletions strictly if x2 was logged as a unit lemma first.
+    ("top-level literal outlives its reason clause", "p cnf 4 6\n1 0\n-1 2 0\n-2 3 4 0\n-3 4 0\n3 -4 0\n-3 -4 0\n", "UNSAT"),
 ]
 
 INVALID = [
