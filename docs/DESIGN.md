@@ -31,7 +31,7 @@
 
 ### 怎样让传播变快：两个监视文字
 
-传播是求解器里执行最频繁的操作（实测占 75% 以上的指令，见 RESULTS.md）。
+传播是求解器里执行最频繁的操作（实测约占 80% 的指令，见 RESULTS.md 6.1 节）。
 朴素做法是每次赋值后扫描所有包含该变量的子句，绝大多数扫描都是白费的：一条有 20 个文字的子句，
 在第 1 个文字变假时什么都推不出来。
 
@@ -199,7 +199,7 @@ CDCL 的做法：撞墙时**分析冲突**。
 ## 8. 代码结构
 
 ```
-src/solver.hpp, solver.cpp   CDCL 核心（约 900 行）
+src/solver.hpp, solver.cpp   CDCL 核心（约 1200 行）
 src/dimacs.hpp               求解器侧的 DIMACS 读取
 src/main.cpp                 命令行
 baseline/dpll.cpp            基线：DPLL，无学习

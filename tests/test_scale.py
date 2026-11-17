@@ -20,7 +20,9 @@ INSTANCES = [
     ("implication ladder, 200k variables (unsat)", "ladder", (100000, 1)),
     ("odd cycle 2-colouring, 199 999 variables (unsat)", "cycle", (199999,)),
     ("even cycle 2-colouring, 200 000 variables (sat)", "cycle", (200000,)),
-    ("parity contradiction, 30 000 inputs (unsat)", "parity", (30000, 6, 0)),
+    # 30 000 inputs timed out (900 s) in the default configuration: there is a cliff between
+    # 4 000 inputs (1.9 s) and 8 000 inputs (> 300 s); see docs/RESULTS.md, section 6.7.
+    ("parity contradiction, 4 000 inputs (unsat)", "parity", (4000, 6, 0)),
     ("pigeonhole 200 pigeons into 200 holes (sat), 4M clauses*", "php", (200, 200)),
 ]
 
@@ -32,7 +34,9 @@ def shrink(family, args):
         return (60, 60)
     if family == "cycle":
         return (args[0] // 10 | (args[0] & 1),)
-    if family in ("chain", "ladder", "parity"):
+    if family == "parity":
+        return (3000,) + args[1:]   # the size the quick suite has always used
+    if family in ("chain", "ladder"):
         return (args[0] // 10,) + args[1:]
     return (args[0] // 10, args[1] // 10) + args[2:]
 

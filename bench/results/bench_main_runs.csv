@@ -1,0 +1,95 @@
+family,instance,vars,clauses,expected,config,status,seconds,conflicts,decisions,propagations,peak_mb,proof_mb,check_seconds,proof_seconds
+pigeonhole,php-7-6,42,133,UNSAT,dpll,UNSAT,0.003,3246.0,3245.0,27325.0,,,,
+pigeonhole,php-7-6,42,133,UNSAT,cdcl,UNSAT,0.004,683.0,1563.0,9944.0,16.7,0.05,0.005,0.007
+pigeonhole,php-8-7,56,204,UNSAT,dpll,UNSAT,0.007,32781.0,32780.0,289211.0,,,,
+pigeonhole,php-8-7,56,204,UNSAT,cdcl,UNSAT,0.041,4329.0,9908.0,64823.0,16.7,0.45,0.075,0.038
+pigeonhole,php-9-8,72,297,UNSAT,dpll,UNSAT,0.071,378344.0,378343.0,3490149.0,,,,
+pigeonhole,php-9-8,72,297,UNSAT,cdcl,UNSAT,0.367,16515.0,50446.0,241052.0,16.7,2.63,0.602,0.495
+pigeonhole,php-10-9,90,415,UNSAT,dpll,UNSAT,0.902,4912515.0,4912514.0,47291999.0,,,,
+pigeonhole,php-10-9,90,415,UNSAT,cdcl,UNSAT,2.586,66265.0,216005.0,963496.0,16.7,11.75,4.353,2.562
+random 3-SAT (threshold),rand-150-a,150,639,,dpll,UNSAT,0.053,34519.0,34518.0,855859.0,,,,
+random 3-SAT (threshold),rand-150-a,150,639,,cdcl,UNSAT,0.031,4697.0,5675.0,148457.0,16.7,0.28,0.037,0.032
+random 3-SAT (threshold),rand-150-b,150,639,,dpll,UNSAT,0.042,28430.0,28429.0,734218.0,,,,
+random 3-SAT (threshold),rand-150-b,150,639,,cdcl,UNSAT,0.026,3942.0,4547.0,121148.0,16.7,0.22,0.026,0.024
+random 3-SAT (threshold),rand-150-c,150,639,,dpll,SAT,0.011,5786.0,5813.0,152117.0,,,,
+random 3-SAT (threshold),rand-150-c,150,639,,cdcl,SAT,0.025,3488.0,4014.0,110760.0,16.7,,,
+random 3-SAT (threshold),rand-150-d,150,639,,dpll,SAT,0.025,17254.0,17286.0,431103.0,,,,
+random 3-SAT (threshold),rand-150-d,150,639,,cdcl,SAT,0.011,1898.0,2208.0,57965.0,16.7,,,
+random 3-SAT (threshold),rand-200-a,200,852,,dpll,SAT,0.446,268240.0,268267.0,8061586.0,,,,
+random 3-SAT (threshold),rand-200-a,200,852,,cdcl,SAT,0.08,8601.0,12328.0,337006.0,16.7,,,
+random 3-SAT (threshold),rand-200-b,200,852,,dpll,SAT,0.175,100073.0,100108.0,2977337.0,,,,
+random 3-SAT (threshold),rand-200-b,200,852,,cdcl,SAT,0.021,2843.0,5116.0,112886.0,16.7,,,
+random 3-SAT (threshold),rand-200-c,200,852,,dpll,UNSAT,0.391,241734.0,241733.0,7656841.0,,,,
+random 3-SAT (threshold),rand-200-c,200,852,,cdcl,UNSAT,0.235,21222.0,29964.0,830156.0,16.7,1.72,0.297,0.245
+random 3-SAT (threshold),rand-200-d,200,852,,dpll,SAT,0.052,30136.0,30171.0,899651.0,,,,
+random 3-SAT (threshold),rand-200-d,200,852,,cdcl,SAT,0.114,11297.0,13543.0,433887.0,16.7,,,
+random 3-SAT (threshold),rand-250-a,250,1065,,dpll,SAT,3.423,2045802.0,2045836.0,69069082.0,,,,
+random 3-SAT (threshold),rand-250-a,250,1065,,cdcl,SAT,2.812,122499.0,207545.0,5482966.0,16.7,,,
+random 3-SAT (threshold),rand-250-b,250,1065,,dpll,UNSAT,11.404,6729768.0,6729767.0,221471897.0,,,,
+random 3-SAT (threshold),rand-250-b,250,1065,,cdcl,UNSAT,1.705,92787.0,145427.0,4112013.0,16.7,10.08,2.226,1.561
+hidden solution,planted-2000-r3.8-a,2000,7600,SAT,dpll,SAT,0.007,646.0,1320.0,55559.0,,,,
+hidden solution,planted-2000-r3.8-a,2000,7600,SAT,cdcl,SAT,0.829,33124.0,84230.0,6762286.0,17.1,,,
+hidden solution,planted-2000-r3.8-b,2000,7600,SAT,dpll,timeout,20.0,,,,,,,
+hidden solution,planted-2000-r3.8-b,2000,7600,SAT,cdcl,SAT,1.28,52249.0,119890.0,10534106.0,16.7,,,
+hidden solution,planted-2000-r4.0,2000,8000,SAT,dpll,timeout,20.0,,,,,,,
+hidden solution,planted-2000-r4.0,2000,8000,SAT,cdcl,timeout,20.0,,,,,,,
+hidden solution,planted-5000-r3.7,5000,18500,SAT,dpll,timeout,20.0,,,,,,,
+hidden solution,planted-5000-r3.7,5000,18500,SAT,cdcl,SAT,2.667,59289.0,257334.0,23150628.0,26.5,,,
+hidden solution,planted-20000-r3.5,20000,70000,SAT,dpll,SAT,0.029,4.0,6840.0,20930.0,,,,
+hidden solution,planted-20000-r3.5,20000,70000,SAT,cdcl,SAT,0.463,2018.0,179745.0,2579093.0,16.7,,,
+hidden solution,planted-400-r4.25,400,1700,SAT,dpll,SAT,0.004,250.0,335.0,15066.0,,,,
+hidden solution,planted-400-r4.25,400,1700,SAT,cdcl,SAT,0.003,6.0,119.0,740.0,16.7,,,
+hidden solution,planted5-1000-r14,1000,14000,SAT,dpll,timeout,20.0,,,,,,,
+hidden solution,planted5-1000-r14,1000,14000,SAT,cdcl,timeout,20.0,,,,,,,
+graph colouring,col3-planted-600-1200,1800,6000,SAT,dpll,SAT,0.003,12.0,230.0,3952.0,,,,
+graph colouring,col3-planted-600-1200,1800,6000,SAT,cdcl,SAT,0.005,59.0,362.0,16981.0,16.7,,,
+graph colouring,col3-planted-600-1350,1800,6450,SAT,dpll,SAT,1.179,162624.0,162765.0,31648123.0,,,,
+graph colouring,col3-planted-600-1350,1800,6450,SAT,cdcl,SAT,0.161,5802.0,15070.0,1664670.0,16.7,,,
+graph colouring,col4-planted-300-1100,1200,6500,SAT,dpll,SAT,0.004,13.0,146.0,2777.0,,,,
+graph colouring,col4-planted-300-1100,1200,6500,SAT,cdcl,SAT,0.005,128.0,429.0,21123.0,16.7,,,
+graph colouring,col3-clique-200,600,1718,UNSAT,dpll,UNSAT,0.005,6156.0,6155.0,114803.0,,,,
+graph colouring,col3-clique-200,600,1718,UNSAT,cdcl,UNSAT,0.004,6.0,46.0,309.0,16.7,0.0,0.002,0.003
+graph colouring,col5-clique-150,750,4225,UNSAT,dpll,UNSAT,0.067,192000.0,191999.0,3645179.0,,,,
+graph colouring,col5-clique-150,750,4225,UNSAT,cdcl,UNSAT,0.004,143.0,323.0,3689.0,16.9,0.0,0.004,0.003
+graph colouring,col3-random-250-590,750,2770,,dpll,UNSAT,0.009,804.0,803.0,128719.0,,,,
+graph colouring,col3-random-250-590,750,2770,,cdcl,UNSAT,0.006,567.0,1010.0,81933.0,16.9,0.06,0.007,0.009
+graph colouring,col3-random-300-700,900,3300,,dpll,UNSAT,0.108,24366.0,24365.0,2637724.0,,,,
+graph colouring,col3-random-300-700,900,3300,,cdcl,UNSAT,0.022,1620.0,2494.0,272853.0,16.9,0.19,0.023,0.024
+parity,parity-same-60,176,468,UNSAT,dpll,timeout,20.0,,,,,,,
+parity,parity-same-60,176,468,UNSAT,cdcl,UNSAT,0.003,523.0,727.0,3988.0,16.9,0.01,0.002,0.003
+parity,parity-same-2000,5996,15988,UNSAT,dpll,timeout,20.0,,,,,,,
+parity,parity-same-2000,5996,15988,UNSAT,cdcl,UNSAT,0.688,23902.0,2594011.0,6730776.0,16.9,0.83,0.025,0.831
+parity,parity-shuffled-20,56,148,UNSAT,dpll,UNSAT,0.204,524288.0,524287.0,13762810.0,,,,
+parity,parity-shuffled-20,56,148,UNSAT,cdcl,UNSAT,0.008,3193.0,4257.0,41254.0,16.9,0.13,0.011,0.014
+parity,parity-shuffled-24,68,180,UNSAT,dpll,UNSAT,3.832,8388608.0,8388607.0,258473986.0,,,,
+parity,parity-shuffled-24,68,180,UNSAT,cdcl,UNSAT,0.06,17086.0,30845.0,226106.0,16.9,0.87,0.117,0.061
+parity,tseitin-4x4,32,128,UNSAT,dpll,UNSAT,0.015,131072.0,131071.0,716238.0,,,,
+parity,tseitin-4x4,32,128,UNSAT,cdcl,UNSAT,0.008,3167.0,5468.0,20220.0,16.9,0.15,0.009,0.007
+parity,tseitin-5x5,50,200,UNSAT,dpll,UNSAT,10.294,67108864.0,67108863.0,435124046.0,,,,
+parity,tseitin-5x5,50,200,UNSAT,cdcl,UNSAT,0.407,60184.0,138176.0,387846.0,16.9,4.15,0.634,0.419
+parity,xor-planted-40,40,160,SAT,dpll,SAT,0.002,7.0,10.0,145.0,,,,
+parity,xor-planted-40,40,160,SAT,cdcl,SAT,0.002,17.0,21.0,335.0,16.9,,,
+parity,xor-planted-70,70,280,SAT,dpll,SAT,0.002,58.0,63.0,1602.0,,,,
+parity,xor-planted-70,70,280,SAT,cdcl,SAT,0.002,74.0,82.0,1656.0,16.9,,,
+ordering principle,ordering-14,182,2380,UNSAT,dpll,timeout,20.0,,,,,,,
+ordering principle,ordering-14,182,2380,UNSAT,cdcl,UNSAT,0.014,2247.0,3531.0,43828.0,16.9,0.19,0.016,0.014
+ordering principle,ordering-20,380,7240,UNSAT,dpll,timeout,20.0,,,,,,,
+ordering principle,ordering-20,380,7240,UNSAT,cdcl,UNSAT,0.289,43939.0,66869.0,954048.0,16.9,6.17,0.421,0.313
+ordering principle,ordering-26,650,16276,UNSAT,dpll,timeout,20.0,,,,,,,
+ordering principle,ordering-26,650,16276,UNSAT,cdcl,UNSAT,3.847,335286.0,710371.0,9116559.0,23.7,70.5,4.977,3.771
+propagation chains,chain-200k-unsat,200000,200001,UNSAT,dpll,UNSAT,0.093,1.0,0.0,199999.0,,,,
+propagation chains,chain-200k-unsat,200000,200001,UNSAT,cdcl,UNSAT,0.148,1.0,0.0,199999.0,40.1,0.0,0.122,0.097
+propagation chains,ladder-100k-unsat,200000,200002,UNSAT,dpll,UNSAT,0.063,2.0,1.0,200002.0,,,,
+propagation chains,ladder-100k-unsat,200000,200002,UNSAT,cdcl,UNSAT,0.056,2.0,1.0,200002.0,40.0,0.0,0.049,0.059
+propagation chains,cycle-199999,199999,399998,UNSAT,dpll,UNSAT,0.064,2.0,1.0,399996.0,,,,
+propagation chains,cycle-199999,199999,399998,UNSAT,cdcl,UNSAT,0.104,2.0,1.0,399996.0,42.3,0.0,0.082,0.076
+duplicates / hidden core,dup-2000-x50,2000,351433,SAT,dpll,SAT,0.053,2.0,717.0,2024.0,,,,
+duplicates / hidden core,dup-2000-x50,2000,351433,SAT,cdcl,SAT,0.074,18.0,747.0,4781.0,21.3,,,
+duplicates / hidden core,core-3000,3030,10581,UNSAT,dpll,timeout,20.0,,,,,,,
+duplicates / hidden core,core-3000,3030,10581,UNSAT,cdcl,UNSAT,0.007,180.0,1312.0,15683.0,16.9,0.02,0.006,0.008
+duplicates / hidden core,core-50000,50042,175133,UNSAT,dpll,timeout,20.0,,,,,,,
+duplicates / hidden core,core-50000,50042,175133,UNSAT,cdcl,UNSAT,0.148,907.0,52225.0,374052.0,18.6,0.19,0.077,0.152
+large,planted5-200k-1M,200000,1000000,SAT,dpll,SAT,0.505,0.0,165207.0,200000.0,,,,
+large,planted5-200k-1M,200000,1000000,SAT,cdcl,SAT,0.706,0.0,165233.0,200000.0,86.8,,,
+large,planted3-200k-600k,200000,600000,SAT,dpll,SAT,0.293,0.0,96357.0,200000.0,,,,
+large,planted3-200k-600k,200000,600000,SAT,cdcl,SAT,0.37,2.0,103854.0,240326.0,59.4,,,

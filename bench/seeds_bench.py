@@ -53,13 +53,15 @@ def main():
     ap.add_argument("--configs", default="default,-phase-saving,-minimize,-blocker,-stable,phase=0",
                     help="comma-separated; use ';' as separator for names that contain a comma")
     ap.add_argument("--families", help="substring filter on family names, comma-separated")
+    ap.add_argument("--solver", default=os.path.join(ROOT, "build", "sat_solver"),
+                    help="solver binary (e.g. build/sat_solver_occorder for experiment E2)")
     ap.add_argument("--out")
     args = ap.parse_args()
     configs = [c for c in CONFIGS if c in args.configs.split(";")] if ";" in args.configs else args.configs.split(",")
     global FAMILIES
     if args.families:
         FAMILIES = [f for f in FAMILIES if any(x in f[0] for x in args.families.split(","))]
-    solver = os.path.join(ROOT, "build", "sat_solver")
+    solver = args.solver
     work = os.path.join(ROOT, "build", "bench", "seeds")
     os.makedirs(work, exist_ok=True)
 

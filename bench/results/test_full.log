@@ -1,0 +1,132 @@
+binaries: /home/user/fable-coding-test/build   mode: full   drat-trim: not installed   tmp: /home/user/fable-coding-test/build/tmp/sat-tests-avaq0o09
+
+== G. input format and command line: ok  [0.9 s]
+   well-formed corner cases agreed by all readers             21
+   malformed inputs rejected by all readers                   15
+   command-line errors reported                               1
+   resource limit yields UNKNOWN                              3
+   proof stream of a SAT run is not a refutation              1
+
+== A. differential fuzz vs brute force (n <= 18): ok  [174.9 s]
+   instances                                                  40000
+   sat (model verified)                                       26549
+   baseline agreed                                            40000
+   ablation configurations verified                           5714
+   unsat (proof verified)                                     13451
+   proofs re-checked (python reference, strict deletions, additions-only) 1363
+
+== B. status known by construction: ok  [305.2 s]
+   planted SAT: model verified                                179
+   planted + contradiction gadget: proof verified             180
+   timeouts (planted SAT, n=1000)                             1
+   hidden pigeonhole core: proof verified                     12
+
+== C. classical families (easy / hard): ok  [300.4 s]
+   instances                                                  46
+   unsat (proof verified)                                     25
+   answers matching the status known by construction          35
+   sat (model verified)                                       21
+   timeouts (hard tier)                                       3
+   instance                                           tier  expected result    conflicts  solve s  proof MB  check s
+   php 5 into 4                                       easy  UNSAT    UNSAT            28     0.01      0.00     0.01
+   php 7 into 6                                       easy  UNSAT    UNSAT           683     0.01      0.05     0.01
+   php 8 into 7                                       easy  UNSAT    UNSAT          4329     0.05      0.45     0.07
+   php 9 into 8                                       hard  UNSAT    UNSAT         16515     0.39      2.63     0.67
+   php 10 into 9                                      hard  UNSAT    UNSAT         66265     3.12     11.75     5.02
+   php 9 into 9 (sat)                                 easy  SAT      SAT               0     0.01         -        -
+   php 40 into 40 (sat)                               easy  SAT      SAT               0     0.01         -        -
+   3-colouring planted n=200 m=440                    easy  SAT      SAT             144     0.01         -        -
+   3-colouring planted n=600 m=1200                   easy  SAT      SAT              78     0.02         -        -
+   3-colouring planted n=600 m=1380 (near threshold)  hard  SAT      SAT          251384    23.75         -        -
+   4-colouring planted n=300 m=1100                   easy  SAT      SAT             228     0.01         -        -
+   4-colouring planted n=300 m=1300 (near threshold)  hard  SAT      SAT          227689    16.65         -        -
+   3-colouring with 4-clique n=200                    easy  UNSAT    UNSAT             0     0.00      0.00     0.00
+   5-colouring with 6-clique n=150                    easy  UNSAT    UNSAT           133     0.00      0.01     0.00
+   3-colouring random n=150 m=345                     easy  ?        UNSAT           143     0.00      0.02     0.00
+   3-colouring random n=250 m=590                     hard  ?        UNSAT          1670     0.02      0.17     0.02
+   random 3-SAT n=100 r=4.26 #1                       easy  ?        SAT             301     0.00         -        -
+   random 3-SAT n=100 r=4.26 #2                       easy  ?        SAT             153     0.00         -        -
+   random 3-SAT n=150 r=4.26 #1                       easy  ?        SAT            3327     0.03         -        -
+   random 3-SAT n=150 r=4.26 #2                       easy  ?        UNSAT          5435     0.04      0.38     0.05
+   random 3-SAT n=200 r=4.26 #1                       easy  ?        UNSAT         30023     0.44      2.45     0.54
+   random 3-SAT n=200 r=4.26 #2                       easy  ?        UNSAT         17453     0.23      1.52     0.27
+   random 3-SAT n=250 r=4.26                          hard  ?        UNSAT        276366     8.99     31.06    11.66
+   random 3-SAT n=300 r=4.26                          hard  ?        SAT           57310     1.11         -        -
+   random 3-SAT n=200 r=6.0 (overconstrained)         easy  ?        UNSAT          1309     0.01      0.07     0.01
+   planted 3-SAT n=2000 r=4.0                         easy  SAT      SAT           50153     1.66         -        -
+   planted 3-SAT n=5000 r=3.7                         easy  SAT      SAT          102307     5.72         -        -
+   planted 3-SAT n=20000 r=3.5                        easy  SAT      SAT              62     0.04         -        -
+   planted 3-SAT n=5000 r=5.0                         hard  SAT      timeout           -     >120
+   planted 3-SAT n=20000 r=6.0                        hard  SAT      timeout           -     >120
+   planted 3-SAT n=400 r=4.25                         hard  SAT      SAT            3054     0.04         -        -
+   planted 5-SAT n=1000 r=18                          hard  SAT      timeout           -     >120
+   unit chain n=200000 (sat)                          easy  SAT      SAT               0     0.14         -        -
+   unit chain n=200000 (unsat)                        easy  UNSAT    UNSAT             0     0.11      0.00     0.11
+   ladder n=100000 (sat)                              easy  SAT      SAT               0     0.09         -        -
+   ladder n=100000 (unsat)                            easy  UNSAT    UNSAT             0     0.07      0.00     0.06
+   duplicates n=300, each clause x20                  easy  SAT      SAT               0     0.01         -        -
+   duplicates n=2000, each clause x50                 easy  SAT      SAT              17     0.11         -        -
+   xor planted n=40 m=40 k=3                          easy  SAT      SAT              15     0.00         -        -
+   xor planted n=60 m=60 k=3                          hard  SAT      SAT              26     0.00         -        -
+   parity contradiction n=60, same order              easy  UNSAT    UNSAT           523     0.00      0.01     0.00
+   parity contradiction n=2000, same order            easy  UNSAT    UNSAT         23902     1.16      0.83     0.03
+   parity contradiction n=24, shuffled                easy  UNSAT    UNSAT         30909     0.12      2.04     0.20
+   parity contradiction n=40, shuffled                hard  UNSAT    UNSAT       1448056    22.27    133.21    51.29
+   tseitin torus 4x4                                  easy  UNSAT    UNSAT          3167     0.01      0.15     0.01
+   tseitin torus 5x5                                  hard  UNSAT    UNSAT         56213     0.46      4.25     0.68
+   ordering principle n=20                            easy  UNSAT    UNSAT         43939     0.37      6.17     0.47
+   ordering principle n=30                            hard  UNSAT    UNSAT       1591226    29.35    411.77    37.42
+   ordering principle n=50                            hard  UNSAT    UNSAT       3065943    71.03   1281.92    90.58
+
+== D. metamorphic transformations: ok  [23.8 s]
+   variant 'rename' agreed                                    1518
+   variant 'clauses' agreed                                   1518
+   variant 'literals' agreed                                  1518
+   variant 'duplicates' agreed                                1518
+   variant 'tautologies' agreed                               1518
+   variant 'unused' agreed                                    1518
+   variant 'all' agreed                                       1518
+   small base formulas (truth from brute force)               1500
+   medium base formulas (truth by construction / first run)   18
+
+== E. proof checker under attack: ok  [78.9 s]
+   hand-written proofs with the expected verdict              26
+   hand-written models with the expected verdict              20
+   verdicts compared between C++ checker and Python reference 31924
+   valid proofs accepted by both checkers                     500
+   corrupted proofs still valid (accepted by both)            2186
+   corrupted proofs rejected by both                          3814
+   near-miss proofs (correct proof, one clause removed from the formula) rejected 4000
+   bogus proofs for satisfiable formulas rejected             4962
+
+== F. incremental solving under assumptions: ok  [43.4 s]
+   UNSAT-under-assumptions answers: core verified (independent solve + proof) 16954
+   core literals                                              29830
+   assumption literals in those queries                       62379
+   SAT answers: model satisfies formula and assumptions       16364
+   formula-refuted answers: proof verified without assumptions 8050
+   sessions (small formulas, truth from brute force)          1500
+   queries                                                    41368
+   fresh certified runs used as oracle                        177
+   sessions (medium formulas, truth from fresh certified runs) 12
+
+== H. size limits (200k variables / 1M clauses / 5M literals): FAILED (1)  [453.0 s]
+   instances                                                  10
+   sat (model verified)                                       5
+   unsat (proof verified)                                     4
+   unknown                                                    1
+   instance                                                     vars  clauses   result   solve s solver MB proof MB   check s  check MB
+   planted 5-SAT 200k vars, 1M clauses, 5M literals           200000  1000000      SAT      0.71        87        -         -         -
+   planted 3-SAT 200k vars, 600k clauses                      200000   600000      SAT      0.40        60        -         -         -
+   planted 5-SAT + hidden pigeonhole core, ~1M clauses        200000   999981    UNSAT      0.69        87     0.01      0.54       103
+   each clause repeated 14x, 1M clauses                        20000   993817      SAT      0.30        59        -         -         -
+   unit chain, 200k variables (unsat)                         200000   200001    UNSAT      0.10        40     0.00      0.12        35
+   implication ladder, 200k variables (unsat)                 200000   200002    UNSAT      0.06        40     0.00      0.06        34
+   odd cycle 2-colouring, 199 999 variables (unsat)           199999   399998    UNSAT      0.07        42     0.00      0.09        44
+   even cycle 2-colouring, 200 000 variables (sat)            200000   400000      SAT      0.11        42        -         -         -
+   pigeonhole 200 pigeons into 200 holes (sat), 4M clauses*    40000  3980200      SAT      0.37       186        -         -         -
+   note: * the pigeonhole instance has 200^2 = 40 000 variables but 3.98M clauses; it exceeds the 1M-clause target on purpose, as a stress test of the clause store.
+   FAILURE: timeout on scale instance: parity contradiction, 30 000 inputs (unsat)
+
+1 FAILURES  (8 groups, 1380.4 s)
+rc=1

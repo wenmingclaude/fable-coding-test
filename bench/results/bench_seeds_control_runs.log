@@ -1,0 +1,107 @@
+planted 3-SAT n=2000 r=4.0         seed 0  -phase-saving  SAT        3.68 s
+planted 3-SAT n=2000 r=4.0         seed 0  -phase-saving,phase=0 SAT       16.73 s
+planted 3-SAT n=2000 r=4.0         seed 0  default        SAT       21.58 s
+planted 3-SAT n=2000 r=4.0         seed 1  default        SAT       21.75 s
+planted 3-SAT n=2000 r=4.0         seed 1  -phase-saving  SAT        0.60 s
+planted 3-SAT n=2000 r=4.0         seed 1  -phase-saving,phase=0 SAT        3.36 s
+planted 3-SAT n=2000 r=4.0         seed 0  -phase-saving,phase=1 timeout   30.00 s
+planted 3-SAT n=2000 r=4.0         seed 1  -phase-saving,phase=1 SAT        9.62 s
+planted 3-SAT n=2000 r=4.0         seed 2  -phase-saving  SAT        0.03 s
+planted 3-SAT n=2000 r=4.0         seed 2  -phase-saving,phase=0 SAT        1.40 s
+planted 3-SAT n=2000 r=4.0         seed 2  -phase-saving,phase=1 SAT        0.77 s
+planted 3-SAT n=2000 r=4.0         seed 3  default        SAT        3.39 s
+planted 3-SAT n=2000 r=4.0         seed 2  default        SAT       16.07 s
+planted 3-SAT n=2000 r=4.0         seed 3  -phase-saving  SAT        7.48 s
+planted 3-SAT n=2000 r=4.0         seed 3  -phase-saving,phase=0 SAT        4.11 s
+planted 3-SAT n=2000 r=4.0         seed 3  -phase-saving,phase=1 SAT        3.73 s
+planted 3-SAT n=2000 r=4.0         seed 4  -phase-saving  SAT        3.52 s
+planted 3-SAT n=2000 r=4.0         seed 4  -phase-saving,phase=0 SAT        1.58 s
+planted 3-SAT n=2000 r=4.0         seed 4  -phase-saving,phase=1 SAT        7.88 s
+planted 3-SAT n=2000 r=4.0         seed 4  default        SAT       21.00 s
+planted 3-SAT n=2000 r=4.0         seed 5  -phase-saving  SAT        3.88 s
+planted 3-SAT n=2000 r=4.0         seed 5  -phase-saving,phase=0 SAT       20.05 s
+planted 3-SAT n=2000 r=4.0         seed 5  default        timeout   30.00 s
+planted 3-SAT n=2000 r=4.0         seed 5  -phase-saving,phase=1 SAT        3.69 s
+planted 3-SAT n=2000 r=4.0         seed 6  -phase-saving  SAT        1.56 s
+planted 3-SAT n=2000 r=4.0         seed 6  -phase-saving,phase=0 SAT        8.57 s
+planted 3-SAT n=2000 r=4.0         seed 6  -phase-saving,phase=1 SAT        7.63 s
+planted 3-SAT n=2000 r=4.0         seed 6  default        timeout   30.00 s
+planted 3-SAT n=2000 r=4.0         seed 7  -phase-saving  SAT        0.09 s
+planted 3-SAT n=2000 r=4.0         seed 7  -phase-saving,phase=0 SAT        0.67 s
+planted 3-SAT n=2000 r=4.0         seed 7  -phase-saving,phase=1 SAT        1.75 s
+planted 3-SAT n=2000 r=4.0         seed 7  default        SAT       21.34 s
+planted 3-SAT n=5000 r=3.8         seed 0  -phase-saving  SAT        3.10 s
+planted 3-SAT n=5000 r=3.8         seed 0  default        timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 0  -phase-saving,phase=0 SAT       27.79 s
+planted 3-SAT n=5000 r=3.8         seed 1  default        SAT       12.11 s
+planted 3-SAT n=5000 r=3.8         seed 1  -phase-saving  SAT        0.66 s
+planted 3-SAT n=5000 r=3.8         seed 0  -phase-saving,phase=1 SAT       27.71 s
+planted 3-SAT n=5000 r=3.8         seed 1  -phase-saving,phase=0 SAT        5.71 s
+planted 3-SAT n=5000 r=3.8         seed 1  -phase-saving,phase=1 SAT        5.35 s
+planted 3-SAT n=5000 r=3.8         seed 2  -phase-saving  SAT        4.53 s
+planted 3-SAT n=5000 r=3.8         seed 2  default        timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 2  -phase-saving,phase=0 timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 2  -phase-saving,phase=1 SAT       12.94 s
+planted 3-SAT n=5000 r=3.8         seed 3  -phase-saving  SAT        0.70 s
+planted 3-SAT n=5000 r=3.8         seed 3  default        timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 3  -phase-saving,phase=0 SAT       26.06 s
+planted 3-SAT n=5000 r=3.8         seed 3  -phase-saving,phase=1 timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 4  default        timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 4  -phase-saving  SAT        0.57 s
+planted 3-SAT n=5000 r=3.8         seed 4  -phase-saving,phase=0 SAT        6.08 s
+planted 3-SAT n=5000 r=3.8         seed 4  -phase-saving,phase=1 timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 5  -phase-saving  SAT        0.54 s
+planted 3-SAT n=5000 r=3.8         seed 5  default        timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 5  -phase-saving,phase=1 SAT       11.97 s
+planted 3-SAT n=5000 r=3.8         seed 6  default        SAT        5.33 s
+planted 3-SAT n=5000 r=3.8         seed 6  -phase-saving  SAT        1.19 s
+planted 3-SAT n=5000 r=3.8         seed 5  -phase-saving,phase=0 timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 6  -phase-saving,phase=1 SAT        5.03 s
+planted 3-SAT n=5000 r=3.8         seed 6  -phase-saving,phase=0 timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 7  -phase-saving  SAT        1.19 s
+planted 3-SAT n=5000 r=3.8         seed 7  default        timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 7  -phase-saving,phase=1 SAT       13.21 s
+3-colouring planted n=800 m=1840   seed 0  default        SAT        3.11 s
+3-colouring planted n=800 m=1840   seed 0  -phase-saving  SAT        0.11 s
+3-colouring planted n=800 m=1840   seed 0  -phase-saving,phase=0 SAT        0.08 s
+3-colouring planted n=800 m=1840   seed 0  -phase-saving,phase=1 SAT        0.50 s
+planted 3-SAT n=5000 r=3.8         seed 7  -phase-saving,phase=0 SAT       27.24 s
+3-colouring planted n=800 m=1840   seed 1  -phase-saving  SAT        9.74 s
+3-colouring planted n=800 m=1840   seed 1  default        SAT       19.17 s
+3-colouring planted n=800 m=1840   seed 1  -phase-saving,phase=0 SAT        9.89 s
+3-colouring planted n=800 m=1840   seed 1  -phase-saving,phase=1 SAT        1.27 s
+3-colouring planted n=800 m=1840   seed 2  default        SAT        7.07 s
+3-colouring planted n=800 m=1840   seed 2  -phase-saving  timeout   30.00 s
+3-colouring planted n=800 m=1840   seed 2  -phase-saving,phase=0 timeout   30.00 s
+3-colouring planted n=800 m=1840   seed 3  default        SAT        7.20 s
+3-colouring planted n=800 m=1840   seed 2  -phase-saving,phase=1 timeout   30.00 s
+3-colouring planted n=800 m=1840   seed 3  -phase-saving  timeout   30.00 s
+3-colouring planted n=800 m=1840   seed 3  -phase-saving,phase=0 timeout   30.00 s
+3-colouring planted n=800 m=1840   seed 4  default        SAT        2.64 s
+3-colouring planted n=800 m=1840   seed 3  -phase-saving,phase=1 timeout   30.00 s
+3-colouring planted n=800 m=1840   seed 4  -phase-saving  timeout   30.00 s
+3-colouring planted n=800 m=1840   seed 4  -phase-saving,phase=1 SAT        7.41 s
+3-colouring planted n=800 m=1840   seed 4  -phase-saving,phase=0 timeout   30.00 s
+3-colouring planted n=800 m=1840   seed 5  -phase-saving  SAT       20.10 s
+3-colouring planted n=800 m=1840   seed 5  default        timeout   30.00 s
+3-colouring planted n=800 m=1840   seed 5  -phase-saving,phase=0 SAT       20.09 s
+3-colouring planted n=800 m=1840   seed 6  default        SAT        8.80 s
+3-colouring planted n=800 m=1840   seed 6  -phase-saving  SAT        1.25 s
+3-colouring planted n=800 m=1840   seed 6  -phase-saving,phase=0 SAT        1.23 s
+3-colouring planted n=800 m=1840   seed 6  -phase-saving,phase=1 SAT        1.41 s
+3-colouring planted n=800 m=1840   seed 5  -phase-saving,phase=1 timeout   30.00 s
+3-colouring planted n=800 m=1840   seed 7  default        SAT        6.81 s
+3-colouring planted n=800 m=1840   seed 7  -phase-saving  SAT        9.20 s
+3-colouring planted n=800 m=1840   seed 7  -phase-saving,phase=1 SAT        0.80 s
+3-colouring planted n=800 m=1840   seed 7  -phase-saving,phase=0 SAT        9.35 s
+8 seeds per family, limit 30 s, 2 parallel jobs.  Cell: solved / median s / PAR-2 s (timeout = 2 x limit; median counts a timeout as the limit).
+
+| family | `default` | `-phase-saving` | `-phase-saving,phase=0` | `-phase-saving,phase=1` |
+|---|---|---|---|---|
+| planted 3-SAT n=2000 r=4.0 | 6 / 21.46 / 225 | 8 / 2.54 / 21 | 8 / 3.73 / 56 | 7 / 5.68 / 95 |
+| planted 3-SAT n=5000 r=3.8 | 2 / 30.00 / 377 | 8 / 0.95 / 12 | 5 / 27.51 / 273 | 6 / 13.08 / 196 |
+| 3-colouring planted n=800 m=1840 | 7 / 7.14 / 115 | 5 / 14.92 / 220 | 5 / 14.99 / 221 | 5 / 4.41 / 191 |
+| **total** | **15 / 717** | **21 / 254** | **18 / 550** | **18 / 483** |
+
+Answer consistency: all configurations agree on every instance.
+

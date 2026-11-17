@@ -1,0 +1,303 @@
+planted 3-SAT n=2000 r=4.0         seed 0  -phase-saving  SAT        3.79 s
+planted 3-SAT n=2000 r=4.0         seed 0  -minimize      SAT       14.97 s
+planted 3-SAT n=2000 r=4.0         seed 0  default        SAT       21.78 s
+planted 3-SAT n=2000 r=4.0         seed 0  -blocker       SAT       22.04 s
+planted 3-SAT n=2000 r=4.0         seed 0  -stable        timeout   30.00 s
+planted 3-SAT n=2000 r=4.0         seed 0  phase=0        timeout   30.00 s
+planted 3-SAT n=2000 r=4.0         seed 1  -phase-saving  SAT        0.57 s
+planted 3-SAT n=2000 r=4.0         seed 1  default        SAT       21.38 s
+planted 3-SAT n=2000 r=4.0         seed 1  -blocker       SAT        0.05 s
+planted 3-SAT n=2000 r=4.0         seed 1  -minimize      SAT       19.25 s
+planted 3-SAT n=2000 r=4.0         seed 1  phase=0        SAT        1.53 s
+planted 3-SAT n=2000 r=4.0         seed 1  -stable        timeout   30.00 s
+planted 3-SAT n=2000 r=4.0         seed 2  -phase-saving  SAT        0.03 s
+planted 3-SAT n=2000 r=4.0         seed 2  -minimize      SAT        1.56 s
+planted 3-SAT n=2000 r=4.0         seed 2  -blocker       SAT        1.75 s
+planted 3-SAT n=2000 r=4.0         seed 2  default        SAT       16.16 s
+planted 3-SAT n=2000 r=4.0         seed 2  -stable        timeout   30.00 s
+planted 3-SAT n=2000 r=4.0         seed 2  phase=0        timeout   30.00 s
+planted 3-SAT n=2000 r=4.0         seed 3  default        SAT        3.38 s
+planted 3-SAT n=2000 r=4.0         seed 3  -minimize      SAT        3.42 s
+planted 3-SAT n=2000 r=4.0         seed 3  -phase-saving  SAT        7.53 s
+planted 3-SAT n=2000 r=4.0         seed 3  -blocker       SAT       17.52 s
+planted 3-SAT n=2000 r=4.0         seed 3  -stable        timeout   30.00 s
+planted 3-SAT n=2000 r=4.0         seed 3  phase=0        timeout   30.00 s
+planted 3-SAT n=2000 r=4.0         seed 4  -phase-saving  SAT        3.47 s
+planted 3-SAT n=2000 r=4.0         seed 4  default        SAT       21.90 s
+planted 3-SAT n=2000 r=4.0         seed 4  -minimize      SAT        3.51 s
+planted 3-SAT n=2000 r=4.0         seed 4  -blocker       SAT       18.24 s
+planted 3-SAT n=2000 r=4.0         seed 4  -stable        timeout   30.00 s
+planted 3-SAT n=2000 r=4.0         seed 4  phase=0        timeout   30.00 s
+planted 3-SAT n=2000 r=4.0         seed 5  -phase-saving  SAT        3.74 s
+planted 3-SAT n=2000 r=4.0         seed 5  default        timeout   30.00 s
+planted 3-SAT n=2000 r=4.0         seed 5  -minimize      timeout   30.00 s
+planted 3-SAT n=2000 r=4.0         seed 5  -blocker       SAT       22.48 s
+planted 3-SAT n=2000 r=4.0         seed 5  phase=0        SAT       17.36 s
+planted 3-SAT n=2000 r=4.0         seed 5  -stable        timeout   30.00 s
+planted 3-SAT n=2000 r=4.0         seed 6  -phase-saving  SAT        1.40 s
+planted 3-SAT n=2000 r=4.0         seed 6  default        timeout   30.00 s
+planted 3-SAT n=2000 r=4.0         seed 6  -minimize      timeout   30.00 s
+planted 3-SAT n=2000 r=4.0         seed 6  -blocker       timeout   30.00 s
+planted 3-SAT n=2000 r=4.0         seed 6  -stable        timeout   30.00 s
+planted 3-SAT n=2000 r=4.0         seed 6  phase=0        timeout   30.00 s
+planted 3-SAT n=2000 r=4.0         seed 7  -phase-saving  SAT        0.12 s
+planted 3-SAT n=2000 r=4.0         seed 7  default        SAT       21.08 s
+planted 3-SAT n=2000 r=4.0         seed 7  -blocker       SAT        1.56 s
+planted 3-SAT n=2000 r=4.0         seed 7  -minimize      timeout   30.00 s
+planted 3-SAT n=2000 r=4.0         seed 7  phase=0        SAT        3.46 s
+planted 3-SAT n=2000 r=4.0         seed 7  -stable        timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 0  -phase-saving  SAT        3.19 s
+planted 3-SAT n=5000 r=3.8         seed 0  -minimize      SAT       22.40 s
+planted 3-SAT n=5000 r=3.8         seed 0  default        timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 0  -blocker       SAT       27.74 s
+planted 3-SAT n=5000 r=3.8         seed 0  -stable        timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 0  phase=0        SAT       11.80 s
+planted 3-SAT n=5000 r=3.8         seed 1  -phase-saving  SAT        0.70 s
+planted 3-SAT n=5000 r=3.8         seed 1  default        SAT       11.93 s
+planted 3-SAT n=5000 r=3.8         seed 1  -blocker       SAT        5.46 s
+planted 3-SAT n=5000 r=3.8         seed 1  -minimize      SAT       10.15 s
+planted 3-SAT n=5000 r=3.8         seed 1  phase=0        SAT        2.98 s
+planted 3-SAT n=5000 r=3.8         seed 1  -stable        timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 2  default        timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 2  -phase-saving  SAT        4.79 s
+planted 3-SAT n=5000 r=3.8         seed 2  -minimize      SAT       28.00 s
+planted 3-SAT n=5000 r=3.8         seed 2  -blocker       timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 2  -stable        timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 2  phase=0        timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 3  -phase-saving  SAT        0.64 s
+planted 3-SAT n=5000 r=3.8         seed 3  default        timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 3  -minimize      timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 3  -blocker       timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 3  -stable        timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 3  phase=0        SAT       25.42 s
+planted 3-SAT n=5000 r=3.8         seed 4  -phase-saving  SAT        0.56 s
+planted 3-SAT n=5000 r=3.8         seed 4  default        timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 4  -minimize      timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 4  -blocker       timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 4  -stable        timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 4  phase=0        timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 5  -phase-saving  SAT        0.55 s
+planted 3-SAT n=5000 r=3.8         seed 5  default        timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 5  -minimize      timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 5  -blocker       timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 5  -stable        timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 6  default        SAT        5.24 s
+planted 3-SAT n=5000 r=3.8         seed 6  -phase-saving  SAT        1.21 s
+planted 3-SAT n=5000 r=3.8         seed 5  phase=0        SAT       23.56 s
+planted 3-SAT n=5000 r=3.8         seed 6  -blocker       SAT        5.02 s
+planted 3-SAT n=5000 r=3.8         seed 6  -minimize      SAT       20.36 s
+planted 3-SAT n=5000 r=3.8         seed 6  phase=0        SAT        5.53 s
+planted 3-SAT n=5000 r=3.8         seed 6  -stable        timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 7  -phase-saving  SAT        1.17 s
+planted 3-SAT n=5000 r=3.8         seed 7  default        timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 7  -minimize      timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 7  -blocker       timeout   30.00 s
+planted 3-SAT n=5000 r=3.8         seed 7  -stable        timeout   30.00 s
+random 3-SAT n=250 r=4.26          seed 0  default        SAT        0.34 s
+random 3-SAT n=250 r=4.26          seed 0  -phase-saving  SAT        0.25 s
+random 3-SAT n=250 r=4.26          seed 0  -minimize      SAT        0.44 s
+random 3-SAT n=250 r=4.26          seed 0  -blocker       SAT        0.46 s
+random 3-SAT n=250 r=4.26          seed 0  -stable        SAT        0.28 s
+random 3-SAT n=250 r=4.26          seed 0  phase=0        SAT        0.27 s
+random 3-SAT n=250 r=4.26          seed 1  default        UNSAT      1.78 s
+random 3-SAT n=250 r=4.26          seed 1  -phase-saving  UNSAT      1.63 s
+random 3-SAT n=250 r=4.26          seed 1  -minimize      UNSAT      2.50 s
+random 3-SAT n=250 r=4.26          seed 1  -blocker       UNSAT      1.95 s
+planted 3-SAT n=5000 r=3.8         seed 7  phase=0        timeout   30.00 s
+random 3-SAT n=250 r=4.26          seed 1  -stable        UNSAT      1.51 s
+random 3-SAT n=250 r=4.26          seed 2  default        SAT        0.12 s
+random 3-SAT n=250 r=4.26          seed 2  -phase-saving  SAT        0.15 s
+random 3-SAT n=250 r=4.26          seed 1  phase=0        UNSAT      1.70 s
+random 3-SAT n=250 r=4.26          seed 2  -minimize      SAT        0.70 s
+random 3-SAT n=250 r=4.26          seed 2  -stable        SAT        0.75 s
+random 3-SAT n=250 r=4.26          seed 2  -blocker       SAT        1.02 s
+random 3-SAT n=250 r=4.26          seed 3  default        SAT        0.12 s
+random 3-SAT n=250 r=4.26          seed 3  -phase-saving  SAT        0.42 s
+random 3-SAT n=250 r=4.26          seed 3  -minimize      SAT        0.04 s
+random 3-SAT n=250 r=4.26          seed 3  -blocker       SAT        0.08 s
+random 3-SAT n=250 r=4.26          seed 3  -stable        SAT        0.06 s
+random 3-SAT n=250 r=4.26          seed 2  phase=0        SAT        1.03 s
+random 3-SAT n=250 r=4.26          seed 3  phase=0        SAT        0.14 s
+random 3-SAT n=250 r=4.26          seed 4  -phase-saving  UNSAT      1.47 s
+random 3-SAT n=250 r=4.26          seed 4  default        UNSAT      1.82 s
+random 3-SAT n=250 r=4.26          seed 4  -blocker       UNSAT      1.30 s
+random 3-SAT n=250 r=4.26          seed 4  -minimize      UNSAT      1.63 s
+random 3-SAT n=250 r=4.26          seed 4  phase=0        UNSAT      1.26 s
+random 3-SAT n=250 r=4.26          seed 4  -stable        UNSAT      1.38 s
+random 3-SAT n=250 r=4.26          seed 5  -phase-saving  SAT        0.03 s
+random 3-SAT n=250 r=4.26          seed 5  -minimize      SAT        0.54 s
+random 3-SAT n=250 r=4.26          seed 5  default        SAT        0.89 s
+random 3-SAT n=250 r=4.26          seed 5  -stable        SAT        0.09 s
+random 3-SAT n=250 r=4.26          seed 5  -blocker       SAT        0.37 s
+random 3-SAT n=250 r=4.26          seed 6  default        SAT        0.15 s
+random 3-SAT n=250 r=4.26          seed 6  -phase-saving  SAT        0.02 s
+random 3-SAT n=250 r=4.26          seed 5  phase=0        SAT        0.21 s
+random 3-SAT n=250 r=4.26          seed 6  -minimize      SAT        0.05 s
+random 3-SAT n=250 r=4.26          seed 6  -blocker       SAT        0.14 s
+random 3-SAT n=250 r=4.26          seed 6  phase=0        SAT        0.12 s
+random 3-SAT n=250 r=4.26          seed 6  -stable        SAT        1.13 s
+random 3-SAT n=250 r=4.26          seed 7  default        UNSAT      2.84 s
+random 3-SAT n=250 r=4.26          seed 7  -phase-saving  UNSAT      2.41 s
+random 3-SAT n=250 r=4.26          seed 7  -minimize      UNSAT      3.35 s
+random 3-SAT n=250 r=4.26          seed 7  -blocker       UNSAT      3.11 s
+random 3-SAT n=250 r=4.26          seed 7  -stable        UNSAT      2.28 s
+random 3-SAT n=250 r=4.26          seed 7  phase=0        UNSAT      3.04 s
+3-colouring planted n=800 m=1840   seed 0  -phase-saving  SAT        0.09 s
+3-colouring planted n=800 m=1840   seed 0  -minimize      SAT        0.27 s
+3-colouring planted n=800 m=1840   seed 0  -blocker       SAT        0.96 s
+3-colouring planted n=800 m=1840   seed 0  default        SAT        3.03 s
+3-colouring planted n=800 m=1840   seed 0  phase=0        SAT        2.98 s
+3-colouring planted n=800 m=1840   seed 1  default        SAT       18.67 s
+3-colouring planted n=800 m=1840   seed 0  -stable        SAT       29.00 s
+3-colouring planted n=800 m=1840   seed 1  -phase-saving  SAT        9.74 s
+3-colouring planted n=800 m=1840   seed 1  -minimize      SAT       28.50 s
+3-colouring planted n=800 m=1840   seed 1  -blocker       timeout   30.00 s
+3-colouring planted n=800 m=1840   seed 1  phase=0        SAT       19.55 s
+3-colouring planted n=800 m=1840   seed 1  -stable        SAT       28.02 s
+3-colouring planted n=800 m=1840   seed 2  default        SAT        7.16 s
+3-colouring planted n=800 m=1840   seed 2  -phase-saving  timeout   30.00 s
+3-colouring planted n=800 m=1840   seed 2  -minimize      timeout   30.00 s
+3-colouring planted n=800 m=1840   seed 2  -blocker       timeout   30.00 s
+3-colouring planted n=800 m=1840   seed 2  -stable        timeout   30.00 s
+3-colouring planted n=800 m=1840   seed 2  phase=0        SAT        7.51 s
+3-colouring planted n=800 m=1840   seed 3  default        SAT        8.04 s
+3-colouring planted n=800 m=1840   seed 3  -phase-saving  timeout   30.00 s
+3-colouring planted n=800 m=1840   seed 3  -minimize      timeout   30.00 s
+3-colouring planted n=800 m=1840   seed 3  -blocker       SAT       19.74 s
+3-colouring planted n=800 m=1840   seed 3  phase=0        SAT        7.12 s
+3-colouring planted n=800 m=1840   seed 4  default        SAT        2.54 s
+3-colouring planted n=800 m=1840   seed 3  -stable        timeout   30.00 s
+3-colouring planted n=800 m=1840   seed 4  -minimize      SAT        6.22 s
+3-colouring planted n=800 m=1840   seed 4  -phase-saving  timeout   30.00 s
+3-colouring planted n=800 m=1840   seed 4  -blocker       SAT       22.12 s
+3-colouring planted n=800 m=1840   seed 4  phase=0        SAT        2.56 s
+3-colouring planted n=800 m=1840   seed 4  -stable        timeout   30.00 s
+3-colouring planted n=800 m=1840   seed 5  default        timeout   30.00 s
+3-colouring planted n=800 m=1840   seed 5  -phase-saving  SAT       19.07 s
+3-colouring planted n=800 m=1840   seed 5  -blocker       SAT        2.94 s
+3-colouring planted n=800 m=1840   seed 5  -minimize      timeout   30.00 s
+3-colouring planted n=800 m=1840   seed 5  -stable        timeout   30.00 s
+3-colouring planted n=800 m=1840   seed 6  default        SAT        8.67 s
+3-colouring planted n=800 m=1840   seed 6  -phase-saving  SAT        1.12 s
+3-colouring planted n=800 m=1840   seed 5  phase=0        timeout   30.00 s
+3-colouring planted n=800 m=1840   seed 6  -blocker       SAT       21.18 s
+3-colouring planted n=800 m=1840   seed 6  -minimize      timeout   30.00 s
+3-colouring planted n=800 m=1840   seed 6  phase=0        SAT        8.80 s
+3-colouring planted n=800 m=1840   seed 7  default        SAT        6.50 s
+3-colouring planted n=800 m=1840   seed 6  -stable        SAT       24.50 s
+3-colouring planted n=800 m=1840   seed 7  -phase-saving  SAT        8.34 s
+3-colouring planted n=800 m=1840   seed 7  -blocker       SAT        7.49 s
+3-colouring planted n=800 m=1840   seed 7  -minimize      timeout   30.00 s
+3-colouring planted n=800 m=1840   seed 7  -stable        SAT       22.79 s
+tseitin torus 5x5                  seed 0  default        UNSAT      0.53 s
+tseitin torus 5x5                  seed 0  -phase-saving  UNSAT      0.25 s
+tseitin torus 5x5                  seed 0  -minimize      UNSAT      0.24 s
+3-colouring planted n=800 m=1840   seed 7  phase=0        SAT        6.22 s
+tseitin torus 5x5                  seed 0  -blocker       UNSAT      0.61 s
+tseitin torus 5x5                  seed 0  -stable        UNSAT      0.42 s
+tseitin torus 5x5                  seed 0  phase=0        UNSAT      0.51 s
+tseitin torus 5x5                  seed 1  -phase-saving  UNSAT      0.33 s
+tseitin torus 5x5                  seed 1  default        UNSAT      0.47 s
+tseitin torus 5x5                  seed 1  -minimize      UNSAT      0.39 s
+tseitin torus 5x5                  seed 1  -blocker       UNSAT      0.41 s
+tseitin torus 5x5                  seed 1  -stable        UNSAT      0.41 s
+tseitin torus 5x5                  seed 1  phase=0        UNSAT      0.47 s
+tseitin torus 5x5                  seed 2  default        UNSAT      0.33 s
+tseitin torus 5x5                  seed 2  -phase-saving  UNSAT      0.33 s
+tseitin torus 5x5                  seed 2  -minimize      UNSAT      0.43 s
+tseitin torus 5x5                  seed 2  -blocker       UNSAT      0.51 s
+tseitin torus 5x5                  seed 2  -stable        UNSAT      0.41 s
+tseitin torus 5x5                  seed 2  phase=0        UNSAT      0.36 s
+tseitin torus 5x5                  seed 3  default        UNSAT      0.40 s
+tseitin torus 5x5                  seed 3  -phase-saving  UNSAT      0.42 s
+tseitin torus 5x5                  seed 3  -minimize      UNSAT      0.37 s
+tseitin torus 5x5                  seed 3  -blocker       UNSAT      0.47 s
+tseitin torus 5x5                  seed 3  -stable        UNSAT      0.43 s
+tseitin torus 5x5                  seed 3  phase=0        UNSAT      0.40 s
+tseitin torus 5x5                  seed 4  default        UNSAT      0.44 s
+tseitin torus 5x5                  seed 4  -phase-saving  UNSAT      0.38 s
+tseitin torus 5x5                  seed 4  -minimize      UNSAT      0.43 s
+tseitin torus 5x5                  seed 4  -blocker       UNSAT      0.44 s
+tseitin torus 5x5                  seed 4  -stable        UNSAT      0.41 s
+tseitin torus 5x5                  seed 4  phase=0        UNSAT      0.53 s
+tseitin torus 5x5                  seed 5  default        UNSAT      0.60 s
+tseitin torus 5x5                  seed 5  -phase-saving  UNSAT      0.42 s
+tseitin torus 5x5                  seed 5  -minimize      UNSAT      0.46 s
+tseitin torus 5x5                  seed 5  -blocker       UNSAT      0.70 s
+tseitin torus 5x5                  seed 5  -stable        UNSAT      0.43 s
+tseitin torus 5x5                  seed 6  default        UNSAT      0.33 s
+tseitin torus 5x5                  seed 5  phase=0        UNSAT      0.59 s
+tseitin torus 5x5                  seed 6  -phase-saving  UNSAT      0.21 s
+tseitin torus 5x5                  seed 6  -minimize      UNSAT      0.37 s
+tseitin torus 5x5                  seed 6  -blocker       UNSAT      0.68 s
+tseitin torus 5x5                  seed 6  -stable        UNSAT      0.50 s
+tseitin torus 5x5                  seed 6  phase=0        UNSAT      0.35 s
+tseitin torus 5x5                  seed 7  default        UNSAT      0.37 s
+tseitin torus 5x5                  seed 7  -phase-saving  UNSAT      0.41 s
+tseitin torus 5x5                  seed 7  -minimize      UNSAT      0.42 s
+tseitin torus 5x5                  seed 7  -blocker       UNSAT      0.66 s
+tseitin torus 5x5                  seed 7  -stable        UNSAT      0.44 s
+parity, shuffled, n=24             seed 0  default        UNSAT      0.02 s
+parity, shuffled, n=24             seed 0  -phase-saving  UNSAT      0.01 s
+parity, shuffled, n=24             seed 0  -minimize      UNSAT      0.02 s
+parity, shuffled, n=24             seed 0  -blocker       UNSAT      0.02 s
+parity, shuffled, n=24             seed 0  -stable        UNSAT      0.02 s
+parity, shuffled, n=24             seed 0  phase=0        UNSAT      0.01 s
+tseitin torus 5x5                  seed 7  phase=0        UNSAT      0.38 s
+parity, shuffled, n=24             seed 1  default        UNSAT      0.29 s
+parity, shuffled, n=24             seed 1  -phase-saving  UNSAT      0.24 s
+parity, shuffled, n=24             seed 1  -minimize      UNSAT      0.29 s
+parity, shuffled, n=24             seed 1  -stable        UNSAT      0.04 s
+parity, shuffled, n=24             seed 1  phase=0        UNSAT      0.29 s
+parity, shuffled, n=24             seed 1  -blocker       UNSAT      0.42 s
+parity, shuffled, n=24             seed 2  default        UNSAT      0.06 s
+parity, shuffled, n=24             seed 2  -phase-saving  UNSAT      0.03 s
+parity, shuffled, n=24             seed 2  -minimize      UNSAT      0.02 s
+parity, shuffled, n=24             seed 2  -stable        UNSAT      0.03 s
+parity, shuffled, n=24             seed 2  -blocker       UNSAT      0.07 s
+parity, shuffled, n=24             seed 2  phase=0        UNSAT      0.05 s
+parity, shuffled, n=24             seed 3  -phase-saving  UNSAT      0.20 s
+parity, shuffled, n=24             seed 3  default        UNSAT      0.33 s
+parity, shuffled, n=24             seed 3  -minimize      UNSAT      0.23 s
+parity, shuffled, n=24             seed 3  -stable        UNSAT      0.27 s
+parity, shuffled, n=24             seed 3  -blocker       UNSAT      0.44 s
+parity, shuffled, n=24             seed 4  default        UNSAT      0.07 s
+parity, shuffled, n=24             seed 4  -phase-saving  UNSAT      0.07 s
+parity, shuffled, n=24             seed 4  -minimize      UNSAT      0.09 s
+parity, shuffled, n=24             seed 4  -blocker       UNSAT      0.07 s
+parity, shuffled, n=24             seed 3  phase=0        UNSAT      0.35 s
+parity, shuffled, n=24             seed 4  phase=0        UNSAT      0.06 s
+parity, shuffled, n=24             seed 5  default        UNSAT      0.04 s
+parity, shuffled, n=24             seed 4  -stable        UNSAT      0.11 s
+parity, shuffled, n=24             seed 5  -phase-saving  UNSAT      0.20 s
+parity, shuffled, n=24             seed 5  -blocker       UNSAT      0.04 s
+parity, shuffled, n=24             seed 5  -stable        UNSAT      0.18 s
+parity, shuffled, n=24             seed 5  phase=0        UNSAT      0.04 s
+parity, shuffled, n=24             seed 5  -minimize      UNSAT      0.45 s
+parity, shuffled, n=24             seed 6  default        UNSAT      0.02 s
+parity, shuffled, n=24             seed 6  -phase-saving  UNSAT      0.04 s
+parity, shuffled, n=24             seed 6  -minimize      UNSAT      0.03 s
+parity, shuffled, n=24             seed 6  -blocker       UNSAT      0.02 s
+parity, shuffled, n=24             seed 6  -stable        UNSAT      0.02 s
+parity, shuffled, n=24             seed 7  default        UNSAT      0.01 s
+parity, shuffled, n=24             seed 6  phase=0        UNSAT      0.02 s
+parity, shuffled, n=24             seed 7  -minimize      UNSAT      0.02 s
+parity, shuffled, n=24             seed 7  -blocker       UNSAT      0.02 s
+parity, shuffled, n=24             seed 7  -phase-saving  UNSAT      0.04 s
+parity, shuffled, n=24             seed 7  -stable        UNSAT      0.02 s
+parity, shuffled, n=24             seed 7  phase=0        UNSAT      0.01 s
+8 seeds per family, limit 30 s, 2 parallel jobs.  Cell: solved / median s / PAR-2 s (timeout = 2 x limit; median counts a timeout as the limit).
+
+| family | `default` | `-phase-saving` | `-minimize` | `-blocker` | `-stable` | `phase=0` |
+|---|---|---|---|---|---|---|
+| planted 3-SAT n=2000 r=4.0 | 6 / 21.58 / 226 | 8 / 2.44 / 21 | 5 / 17.11 / 223 | 7 / 17.88 / 144 | 0 / 30.00 / 480 | 3 / 30.00 / 322 |
+| planted 3-SAT n=5000 r=3.8 | 2 / 30.00 / 377 | 8 / 0.94 / 13 | 4 / 29.00 / 321 | 3 / 30.00 / 338 | 0 / 30.00 / 480 | 5 / 24.49 / 249 |
+| random 3-SAT n=250 r=4.26 | 8 / 0.61 / 8 | 8 / 0.33 / 6 | 8 / 0.62 / 9 | 8 / 0.74 / 8 | 8 / 0.94 / 7 | 8 / 0.65 / 8 |
+| 3-colouring planted n=800 m=1840 | 7 / 7.60 / 115 | 5 / 14.40 / 218 | 3 / 30.00 / 335 | 6 / 20.46 / 194 | 4 / 29.50 / 344 | 7 / 7.31 / 115 |
+| tseitin torus 5x5 | 8 / 0.42 / 3 | 8 / 0.36 / 3 | 8 / 0.40 / 3 | 8 / 0.56 / 4 | 8 / 0.43 / 3 | 8 / 0.44 / 4 |
+| parity, shuffled, n=24 | 8 / 0.05 / 1 | 8 / 0.06 / 1 | 8 / 0.06 / 1 | 8 / 0.05 / 1 | 8 / 0.03 / 1 | 8 / 0.05 / 1 |
+| **total** | **39 / 730** | **45 / 262** | **36 / 892** | **40 / 690** | **28 / 1316** | **39 / 699** |
+
+Answer consistency: all configurations agree on every instance.
+
+SEEDS_DONE
